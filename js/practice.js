@@ -1,252 +1,218 @@
 /* ============================================================
-   CS214 Revise — quiz bank + exercise set
+   CS160 Revise — quiz bank + exercise set
    ============================================================ */
 
 const QUIZ_BANK = [
 
-/* ---- Week 1: data structures ---- */
-{ topic:'Data structures', q:'What is a data structure?',
-  opts:['A value or set of values of a given type','A way of organising data so that it is easier to use','Any class that implements Comparable','A measure of how much RAM a program uses'],
-  a:1, why:'Data is a value or set of values; structure is a way of organising information; a data structure is a way of organising data so that data can be easier to use.' },
+/* ---- Week 1: the profession & ethics ---- */
+{ topic:'Week 1 · Profession', q:'Unlike hardware, software does not physically wear out, but it can still become unreliable because…',
+  opts:['It slowly degrades the more it is used','It follows the same bathtub curve as hardware','Its instructions physically erode over time','Every change made to it carries a risk of introducing a new defect'],
+  a:3, why:'Software does not degrade with use, but every change (bug fix, new feature) risks introducing a new defect, so reliability spikes after each change rather than wearing out smoothly.' },
 
-{ topic:'Data structures', q:'Which is NOT one of the four criteria the lecture gives for choosing a data structure?',
-  opts:['Must meet requirement','High performance','Low RAM footprint','Written in Java'],
-  a:3, why:'The four criteria are: must meet requirement, high performance, low RAM footprint, easy to implement.' },
+{ topic:'Week 1 · Profession', q:'A COTS (generic) product is best described as…',
+  opts:['Built for one specific customer\u2019s exact needs','Built once and sold or distributed to many customers who all get the same product','Software that can never be sold commercially','A product built only for government use'],
+  a:1, why:'COTS = commercial off-the-shelf, e.g. Microsoft Word. Bespoke/custom software is built for one specific customer, e.g. M-PAiSA.' },
 
-{ topic:'Data structures', q:'A stack is based on which rule?',
-  opts:['FIFO — first in, first out','LIFO — last in, first out','Highest priority out first','Sorted order'],
-  a:1, why:'Stack is LIFO. Its applications include parsing algebraic expressions and keeping track of variables and return addresses for function calls.' },
+{ topic:'Week 1 · Profession', q:'In Pressman\u2019s layered model of software engineering, "methods" refers to…',
+  opts:['The defined steps followed, in order','The specific technical know-how used at each step of the process','The team\u2019s shared commitment to doing good work','The software and automation that supports development'],
+  a:1, why:'Process = the steps in order; methods = the technical how-to at each step; tools = automation; quality focus = the foundation commitment.' },
 
-{ topic:'Data structures', q:'Which property makes a binary heap a heap rather than just a binary tree?',
-  opts:['It is complete, and each node relates by value to its parent','It stores only integers','It has exactly log n levels','Every node has two children'],
-  a:0, why:'A heap is a complete binary tree — all levels filled except possibly the last — and the value of each node is greater (or less) than or equal to the value of its parent.' },
+{ topic:'Week 1 · Profession', q:'The "software crisis" that led to the term "software engineering" is traced to which event?',
+  opts:['The release of the first personal computer','The 1968 NATO Software Engineering Conference','The invention of the first compiler','The founding of the ACM'],
+  a:1, why:'The 1968 NATO Software Engineering Conference is where the term "software engineering" was first used deliberately.' },
 
-{ topic:'Data structures', q:'`Arrays.binarySearch(a, key)` gives a wrong answer when…',
-  opts:['the array contains duplicates','the array is not sorted','key is negative','the array is longer than 1024'],
-  a:1, why:'Binary search compares against the middle element and discards half the array. That reasoning only holds on a sorted array.' },
+{ topic:'Week 1 · Roles', q:'Which core role is the bridge between the people who want software and the people who build it?',
+  opts:['Developer','Tester','Business/systems analyst','DevOps Engineer'],
+  a:2, why:'The analyst elicits and documents requirements, and confirms the finished product matches what was actually asked for.' },
 
-{ topic:'Data structures', q:'Which structure would you choose for a call centre that must serve callers strictly in arrival order?',
-  opts:['Stack','Hash table','Queue','Heap'],
-  a:2, why:'First-come-first-served is FIFO, which is the queue rule. This is Lab Week 2 Question 1.' },
+{ topic:'Week 1 · Roles', q:'In an Agile team, the "Scrum Master" role most closely resembles which Week 1 role, though with a key difference?',
+  opts:['Tester, but does not write test cases','Analyst, but does not talk to stakeholders','Project Manager, but guides the team\u2019s process rather than directing individual work','Developer, but focuses only on testing'],
+  a:2, why:'The Scrum Master protects and facilitates the team\u2019s process rather than directing individuals\u2019 day-to-day work, unlike a traditional Project Manager.' },
 
-{ topic:'Data structures', q:'A `PriorityQueue<String>` needs which extra object to know the ordering?',
-  opts:['An Iterator','A Comparator','A Cloneable','A ClassCastException'],
-  a:1, why:'`new PriorityQueue<String>(SIZE, comparator)` — and writing the comparator requires understanding inheritance, which is why the lecture defers it.' },
+{ topic:'Week 1 · Roles', q:'Which two roles emerged specifically as software moved to the cloud and released more frequently?',
+  opts:['Analyst and Project Manager','DevOps Engineer and Site Reliability Engineer','Developer and Tester','Product Owner and Scrum Master'],
+  a:1, why:'DevOps Engineer automates safe, frequent releases; SRE keeps already-live cloud systems available and fast.' },
 
-/* ---- Week 1: Java OOP ---- */
-{ topic:'Java OOP', q:'Which is part of a method signature?',
-  opts:['The return type','The number, type and order of the parameters','The access modifier','The name of the class'],
-  a:1, why:'The signature includes the number, type and order of the parameters. The return type is explicitly NOT part of the signature.' },
+{ topic:'Week 1 · Ethics', q:'Data-protection laws such as the GDPR, which require "privacy by design," most directly relate to which of Week 1\u2019s four areas of responsibility?',
+  opts:['No Misuse','Confidentiality','Competence','Intellectual Property'],
+  a:1, why:'"Privacy by design" is about protecting personal data from the very start — the Confidentiality obligation, made stricter.' },
 
-{ topic:'Java OOP', q:'Two methods in the same class have the same name and identical parameters but different return types. What happens?',
-  opts:['They overload correctly','They override each other','Compile error','The one declared first wins'],
-  a:2, why:'Return type is not part of the signature, so the compiler cannot decide which one you meant — it is a compile error, not an overload.' },
+{ topic:'Week 1 · Ethics', q:'How many areas does the ACM/IEEE Software Engineering Code of Ethics organise a professional\u2019s obligations into?',
+  opts:['Four','Six','Eight','Ten'],
+  a:2, why:'Public, Client & Employer, Product, Judgement, Management, Profession, Colleagues, Self — eight areas.' },
 
-{ topic:'Java OOP', q:'Which access level allows the class itself, other classes in the same package, AND subclasses?',
-  opts:['private','package','protected','public'],
-  a:2, why:'protected (#) is package access plus subclasses. Remember the mnemonic: you know, everyone in the same group knows, and your children know.' },
+{ topic:'Week 1 · Ethics', q:'The Boeing 737 MAX case is described as a failure of which Code of Ethics areas above all?',
+  opts:['Colleagues and Self','Public and Judgement','Profession and Management','Intellectual Property and Competence'],
+  a:1, why:'Concerns were not acted on with independent judgement, and the public\u2019s safety interest was not prioritised as the Code requires.' },
 
-{ topic:'Java OOP', q:'What access level do you get if you write no modifier at all?',
-  opts:['private','package','protected','public'],
-  a:1, why:'Package (~) is the default access level when no access level is specified. It is not a keyword you can type.' },
+{ topic:'Week 1 · Ethics', q:'The Knight Capital Group failure (2012) was ultimately caused by…',
+  opts:['A brand-new untested feature released for the first time','A dormant, deprecated routine left on a server, triggered by a recycled feature flag during an incomplete deployment','A deliberate cyberattack by a competitor','A hardware failure in the data centre'],
+  a:1, why:'"Power Peg" was deprecated but left dormant; a later deployment left one of eight servers unpatched, and it wrongly triggered the old routine — losing $440 million in 45 minutes.' },
 
-{ topic:'Java OOP', q:'Which of these CANNOT be overridden?',
-  opts:['A public instance method','A protected instance method','A static method','A method that calls super'],
-  a:2, why:'Only non-static methods can be overridden. A subclass also cannot override methods declared final.' },
+/* ---- Week 2: SDLC ---- */
+{ topic:'Week 2 · SDLC', q:'Which of the following is NOT one of the three reasons given for why a structured SDLC process matters?',
+  opts:['Shared understanding','Predictability','Quality control','Lower marketing costs'],
+  a:3, why:'The three reasons are predictability, quality control, and shared understanding.' },
 
-{ topic:'Java OOP', q:'In UML, inheritance is drawn as…',
-  opts:['an empty diamond','a filled diamond','a clear triangle','a dashed arrow'],
-  a:2, why:'Clear triangle = generalization/inheritance. Empty diamond = aggregation. Filled diamond = composition. Plain line = association.' },
+{ topic:'Week 2 · SDLC', q:'A Software Requirements Specification (SRS) typically lists both…',
+  opts:['Budgets and schedules only','Developers and testers','Verification and deployment plans','Functional requirements and non-functional requirements'],
+  a:3, why:'The SRS is the output of the Requirements phase, listing functional and non-functional requirements.' },
 
-{ topic:'Java OOP', q:'`super.super.x` is…',
-  opts:['how you reach a grandparent field','valid only inside a constructor','not valid','equivalent to ((Base)this).x'],
-  a:2, why:'The notes state plainly that super.super.x is not valid. You can reach a parent field with super.x or with a cast, but Java gives you no way to skip two levels.' },
+{ topic:'Week 2 · SDLC', q:'Updating software so it keeps working after a new operating system version is released is an example of which type of maintenance?',
+  opts:['Adaptive','Perfective','Corrective','Preventive'],
+  a:0, why:'Adaptive maintenance updates software so it keeps working as its environment changes.' },
 
-{ topic:'Java OOP', q:'Which is the third basic principle of object oriented programming, according to the lecture?',
-  opts:['Encapsulation','Inheritance','Polymorphism','Abstraction'],
-  a:2, why:'The polymorphism lecture describes it as the third basic principle of OOP, and notes that overloading and overriding are its two types.' },
+{ topic:'Week 2 · SDLC', q:'In Boehm\u2019s cost-of-change curve, which phase shows a defect as cheapest to fix?',
+  opts:['Maintenance','Testing','Requirements','Design'],
+  a:2, why:'A mistake caught on paper during Requirements is cheap; the same mistake caught in Maintenance can cost 50–200x more.' },
 
-{ topic:'Java OOP', q:'`Base b = new Derived();` — this assignment is an example of…',
-  opts:['downcasting, and needs an explicit cast','upcasting, which is implicit and always safe','shadowing','a compile error'],
-  a:1, why:'Derived → Base moves up the inheritance diagram. The derived class is a superset of the base class, so it must contain at least the base class methods; that is why the compiler allows it without an explicit cast.' },
+{ topic:'Week 2 · SDLC', q:'Which pair of terms describes "are we building the product right?" and "are we building the right product?"',
+  opts:['Testing and Deployment','Verification and Validation','Requirements and Design','Elicitation and Specification'],
+  a:1, why:'Verification checks the output matches its spec; validation checks the system meets the real need.' },
 
-{ topic:'Java OOP', q:'`d = (derived) b;` where b really refers to a plain `base` object. What happens?',
-  opts:['Compile error','Compiles, then fails at run time','Compiles and runs fine','Silently returns null'],
-  a:1, why:'The cast convinces the compiler to allow the narrowing conversion. The run-time check then determines whether the class of the object being cast is compatible with the new type — here it is not.' },
+{ topic:'Week 2 · SDLC', q:'What is "traceability"?',
+  opts:['The speed at which a team can deploy code','The ability to follow a chain from requirement to design to code to test case','A measure of how many bugs are found in testing','The process of tracking a project\u2019s budget only'],
+  a:1, why:'Traceability is the chain requirement → design decision → code → test case, made checkable by documentation.' },
 
-{ topic:'Java OOP', q:'Which category of member is DYNAMICALLY bound?',
-  opts:['Instance variables','Static variables','Instance methods','Static methods'],
-  a:2, why:'Instance methods are the only dynamically bound case. Instance variables, shadowed variables, static variables and static methods are all statically bound.' },
+{ topic:'Week 2 · SDLC', q:'Roughly what share of a system\u2019s total lifetime cost is typically spent after launch, during maintenance?',
+  opts:['Under 10%','About 30%','About 50%','Over 70%'],
+  a:3, why:'Maintenance typically accounts for over 70% of a system\u2019s total lifetime cost.' },
 
-{ topic:'Java OOP', q:'`Base r = new Derived();` Both classes declare `int x`. What does `r.x` give you?',
-  opts:['Derived\'s x, because of the object','Base\'s x, because fields are statically bound','A compile error','Whichever was assigned last'],
-  a:1, why:'Fields are resolved from the declared type of the reference at compile time. This is the classic contrast with r.show(), which would call Derived\'s override because instance methods are dynamically bound.' },
+/* ---- Week 3: process models ---- */
+{ topic:'Week 3 · Process models', q:'The Waterfall model gets its name because…',
+  opts:['Like water flowing down steps, the project moves in one direction only, with no going back','It was invented at a company called Waterfall Software','It involves building software near rivers','It refers to a steep drop in project costs'],
+  a:0, why:'The visual metaphor: like water flowing down steps, the project moves in one direction only.' },
 
-{ topic:'Java OOP', q:'Casting an object to a different type changes…',
-  opts:['which overridden method is invoked','only the compiler\'s treatment of the reference','the object\'s actual type','nothing at all'],
-  a:1, why:'Casting does not change the reference or the object being pointed to; it only changes the compiler\'s treatment of the reference. Once overridden, methods remain overridden. It does however change which shadowed field you see.' },
+{ topic:'Week 3 · Process models', q:'Waterfall traces back to a 1970 paper by which author — who actually recommended AGAINST the strict, single-pass version?',
+  opts:['Kent Beck','Winston Royce','Barry Boehm','Ian Sommerville'],
+  a:1, why:'Winston Royce\u2019s 1970 paper argued the strict single-pass version was risky and recommended iterating and prototyping alongside it.' },
 
-{ topic:'Java OOP', q:'Which operator lets you verify an object\'s real type before downcasting?',
-  opts:['typeof','instanceof','getClass','isA'],
-  a:1, why:'`if (b1 instanceof derived) { d1 = (derived) b1; }` — instanceof also works for testing whether a class implements an interface.' },
+{ topic:'Week 3 · Process models', q:'The Incremental model is most appropriate when…',
+  opts:['The project must have zero working software until the very end','Requirements are completely unknown and cannot be identified at all','A regulator requires a single, complete, signed-off plan before any work begins','The system\u2019s core features can be identified early, even if details change later'],
+  a:3, why:'Incremental fits when core features can be identified early and delivering a working part has real value.' },
 
-{ topic:'Java OOP', q:'How many copies of a `static` field exist?',
-  opts:['One per object','One per class','One per method call','One per package'],
-  a:1, why:'A class variable declared static has only one copy, shared by all objects of the class. Instance variables have one copy per object; local variables get a new copy each time the method is entered.' },
+{ topic:'Week 3 · Process models', q:'In the V-Model, System Testing is paired with which development phase?',
+  opts:['System Design','Module Design','Coding','Requirements'],
+  a:0, why:'System Testing sits opposite System Design on the ascending side of the V.' },
 
-{ topic:'Java OOP', q:'An abstract class with no abstract methods is…',
-  opts:['a compile error','perfectly legal','automatically an interface','implicitly final'],
-  a:1, why:'An abstract class is not required to have an abstract method in it. The reverse is what is compulsory: any class that HAS an abstract method must be declared abstract.' },
+{ topic:'Week 3 · Process models', q:'In the V-Model, which testing phase pairs with Requirements?',
+  opts:['Unit Testing','Integration Testing','System Testing','Acceptance Testing'],
+  a:3, why:'Acceptance Testing pairs with Requirements — both sit at the top of the V, and this pairing is validation.' },
 
-{ topic:'Java OOP', q:'Which is legal for an abstract class `Animal`?',
-  opts:['`Animal a = new Animal();`','`Animal a;` on its own','Both','Neither'],
-  a:1, why:'An abstract class cannot be instantiated, however references to an abstract class can be declared. That declared reference is what makes polymorphism work.' },
+{ topic:'Week 3 · Process models', q:'A weakness shared by both the V-Model and Waterfall is that…',
+  opts:['Neither model produces test cases','They are both sequential and rigid, with no working software until late in the project','They both require no documentation at all','They are both impossible to use for safety-critical systems'],
+  a:1, why:'Both are strictly sequential with no planned point to revisit an earlier phase.' },
 
-{ topic:'Java OOP', q:'How many interfaces can a Java class implement?',
-  opts:['Exactly one','At most two','One or more','None — only extend'],
-  a:2, why:'Classes can extend only one class, but can implement one or more interfaces. This is how Java supports multiple inheritance.' },
+{ topic:'Week 3 · Process models', q:'Which process model would best fit a government e-Tax system, where tax rules are fixed by law before development starts?',
+  opts:['Agile','Waterfall','Extreme Programming','Scrum'],
+  a:1, why:'Stable, well-understood, heavily regulated requirements with required sign-off is exactly Waterfall\u2019s strength.' },
 
-{ topic:'Java OOP', q:'A field declared inside an interface is implicitly…',
-  opts:['private','public static final','protected','abstract'],
-  a:1, why:'Any fields in an interface are automatically static and final, and must be class constants — which makes interfaces a convenient way to group constants, like an enum in C or C++.' },
+/* ---- Week 4: Agile, Scrum, XP ---- */
+{ topic:'Week 4 · Agile', q:'True or False: Agile was invented at the Snowbird meeting in 2001; before that meeting, no lightweight development methods existed.',
+  opts:['True','False'],
+  a:1, why:'False — Scrum (1993) and XP (1996–1999) already existed. The Manifesto gave scattered approaches a shared name.' },
 
-{ topic:'Java OOP', q:'Why does the lecture say you should extend an interface rather than add a method to it?',
-  opts:['Extending is faster at run time','Interfaces cannot grow — adding a method breaks every class that implements it','Java forbids editing interfaces','Because interfaces are final'],
-  a:1, why:'Adding a method to a class does not affect its users. Adding a method to an interface breaks every implementing class, since they must now implement another method. So extend into a sub-interface instead.' },
+{ topic:'Week 4 · Agile', q:'The Agile Manifesto\u2019s four values are each written in what format?',
+  opts:['"X and Y"','"X over Y"','"Either X or Y"','"X before Y"'],
+  a:1, why:'Each value is "X over Y" — the left item is favoured when the two conflict, not that the right item is worthless.' },
 
-{ topic:'Java OOP', q:'`final` applied to a class means…',
-  opts:['it cannot be instantiated','it cannot be subclassed, and its methods are implicitly final too','all its fields are constants','it has no constructor'],
-  a:1, why:'Final field = constant. Final argument = the called method cannot change the data. Final method = cannot be overridden. Final class = cannot be subclassed.' },
+{ topic:'Week 4 · Scrum', q:'Scrum defines exactly how many artifacts?',
+  opts:['Two','Five','Three','Four'],
+  a:2, why:'Product Backlog, Sprint Backlog, and Increment — exactly three.' },
 
-{ topic:'Java OOP', q:'`compareTo` returns a positive integer when…',
-  opts:['the object it is applied to is less than the argument','they are equal','the object it is applied to is greater than the argument','the argument is null'],
-  a:2, why:'Negative if less than, zero if equal, positive if greater. Arrays.sort(Object[]) requires every element to implement Comparable.' },
+{ topic:'Week 4 · Scrum', q:'Which Scrum event involves stakeholders outside the Development Team?',
+  opts:['Sprint Retrospective','Sprint Planning only','Daily Scrum','Sprint Review'],
+  a:3, why:'The Sprint Review demos the Increment to stakeholders. The Retrospective is team-only.' },
 
-{ topic:'Java OOP', q:'What does the default `Object.clone()` do with a field that holds a reference to another object?',
-  opts:['Clones that object too','Copies the reference, so both objects share the subobject','Sets it to null','Throws CloneNotSupportedException'],
-  a:1, why:'clone() initialises fields with exactly the contents of the corresponding fields as if by assignment — the contents of the fields are not themselves cloned. That is a shallow copy; you must override clone() for a deep copy.' },
+{ topic:'Week 4 · Scrum', q:'Scrum is often said to have "four events" — why is this not quite accurate?',
+  opts:['There are actually six events','The Sprint itself is the first event, containing the other four, making five in total','Scrum has no fixed events','The Daily Scrum does not count as an event'],
+  a:1, why:'The Sprint is the container event; Planning, Daily Scrum, Review and Retrospective happen inside it — five events total.' },
 
-{ topic:'Java OOP', q:'Cloning an object whose class does not implement `Cloneable` produces…',
-  opts:['a null result','a shallow copy anyway','a CloneNotSupportedException','a compile error'],
-  a:2, why:'Cloneable is an empty interface that marks a class as cloneable. Without it, clone() throws CloneNotSupportedException at run time.' },
+{ topic:'Week 4 · Scrum', q:'Who owns the Product Backlog?',
+  opts:['The Scrum Master','The Development Team','The Product Owner','The customer\u2019s legal department'],
+  a:2, why:'The Product Owner owns the Product Backlog and decides what matters most.' },
 
-{ topic:'Java OOP', q:'Which relationship means "removing the whole also removes the parts"?',
-  opts:['Association','Aggregation','Composition','Generalization'],
-  a:2, why:'Composition — drawn with a filled diamond. Aggregation (empty diamond) is a whole-part relationship where the part can outlive the whole.' },
+{ topic:'Week 4 · XP', q:'Which XP practice means "write the test before the code, then write just enough code to pass it"?',
+  opts:['Pair Programming','Test-Driven Development','Continuous Integration','Collective Code Ownership'],
+  a:1, why:'TDD: write a failing test first, then the minimal code to make it pass, then refactor.' },
 
-{ topic:'Java OOP', q:'"A house has furniture" is an example of…',
-  opts:['association','aggregation','composition','generalization'],
-  a:0, why:'Association is the plain "has a" relationship — the ability of one instance to send a message to another. "A house has a part roof" would be aggregation.' },
+{ topic:'Week 4 · XP', q:'XP was developed under real pressure on which project?',
+  opts:['The London Ambulance Service dispatch system','The Chrysler Comprehensive Compensation System (C3)','The Knight Capital trading platform','The USP Student Portal'],
+  a:1, why:'Kent Beck was brought in to rescue Chrysler\u2019s C3 payroll project in 1996, introducing the practices that became XP.' },
 
-{ topic:'Java OOP', q:'Which are ALWAYS passed by value in Java?',
-  opts:['All objects','Arrays','Primitive data types and Strings','Nothing — Java is always by reference'],
-  a:2, why:'The lecture states it directly: primitive data types and Strings are always passed by value.' },
+{ topic:'Week 4 · Comparison', q:'Across Waterfall, Incremental, V-Model and Agile/Scrum, which has the HIGHEST flexibility to change?',
+  opts:['Waterfall','Incremental','V-Model','Agile/Scrum'],
+  a:3, why:'Agile/Scrum is High; Incremental is Moderate; Waterfall and V-Model are both Low.' },
 
-{ topic:'Java OOP', q:'In a singleton, the constructor is private so that…',
-  opts:['it runs faster','no code outside the class can create an instance','it can be overridden','it becomes static'],
-  a:1, why:'A private or protected constructor means no direct access from outside; a static getInstance()-style method is then the only route to the single object.' },
+/* ---- Week 5: requirements engineering ---- */
+{ topic:'Week 5 · Requirements', q:'What is the main output (deliverable) of the requirements phase?',
+  opts:['The source code','The Software Requirements Specification (SRS)','The test plan','The deployment schedule'],
+  a:1, why:'The SRS lists functional and non-functional requirements; every later phase is checked against it.' },
 
-/* ---- Week 2 ---- */
-{ topic:'Complexity', q:'What is an "instance" of a problem?',
-  opts:['A running copy of the program','One specific assignment of values to the parameters','A subclass of the problem','The worst case input'],
-  a:1, why:'A problem contains parameters — variables not assigned specific values in the statement. Each specific assignment of values to those parameters is an instance.' },
+{ topic:'Week 5 · Requirements', q:'The London Ambulance Service (1992) case is described as primarily a failure of…',
+  opts:['Coding standards','Requirements engineering','Deployment automation','Test coverage'],
+  a:1, why:'The inquiry found an unrealistic timeline, inadequate consultation with users, and a specification that did not reflect real conditions.' },
 
-{ topic:'Complexity', q:'Why do we not measure running time in CPU cycles?',
-  opts:['They are too small to measure','It depends on the computer, and we want a machine-independent measure','Cycles vary randomly','Big O forbids it'],
-  a:1, why:'We want a measure independent of the computer, the programming language, the programmer, and all the complex details of the implementation.' },
+{ topic:'Week 5 · Elicitation', q:'Which elicitation technique reaches many stakeholders quickly and cheaply, but has no follow-up if an answer is unclear?',
+  opts:['Interviews','Questionnaires','Observation','Joint Application Design'],
+  a:1, why:'Questionnaires reach many people fast but cannot dig deeper into an unclear or ambiguous answer.' },
 
-{ topic:'Complexity', q:'Time complexity analysis determines…',
-  opts:['the number of lines of code','how many times the basic operation is done for each value of the input size','the memory used','the number of variables declared'],
-  a:1, why:'Total running time is proportional to how many times some basic operation is done, so we count that as a function of the input size.' },
+{ topic:'Week 5 · Elicitation', q:'Which elicitation technique is also called "ethnography"?',
+  opts:['Interviews','Questionnaires','Observation','JAD'],
+  a:2, why:'Observation — watching stakeholders do their actual work — is also called ethnography.' },
 
-{ topic:'Complexity', q:'`for (i=0;i<n;i++) result = result + array[i];` — what is T(n)?',
-  opts:['1','n','n(n−1)/2','n²'],
-  a:1, why:'The addition is the basic operation and the loop runs exactly n times regardless of the array contents, so there is an every-case complexity T(n) = n.' },
+{ topic:'Week 5 · Elicitation', q:'What problem was Joint Application Design (JAD) originally designed to solve?',
+  opts:['Writing automated test cases faster','Speeding up requirements gathering by bringing stakeholders into one structured workshop instead of separate interviews','Replacing the need for an SRS entirely','Automating software deployment'],
+  a:1, why:'JAD solves both the slowness of interviewing and the risk that stakeholders never hear each other\u2019s conflicting needs.' },
 
-{ topic:'Complexity', q:'Exchange sort: what is T(n) for the number of comparisons?',
-  opts:['n','n²','n(n−1)/2','log₂ n'],
-  a:2, why:'The inner loop runs n−1, then n−2, … down to 1, giving (n−1)+(n−2)+…+1 = n(n−1)/2. Note that the number of EXCHANGES has no every-case complexity because it depends on the input.' },
+{ topic:'Week 5 · FR vs NFR', q:'"The system shall support 500 concurrent users without slowing down" is an example of a…',
+  opts:['Functional requirement','Non-functional requirement','User story only','Use case only'],
+  a:1, why:'This describes a performance constraint — how well the system copes — not a feature, so it is non-functional.' },
 
-{ topic:'Complexity', q:'Matrix multiplication of two n×n matrices has T(n) =',
-  opts:['n²','n³','n log n','2n²'],
-  a:1, why:'Three nested loops each running n times, with the multiply-add as the basic operation: n × n × n = n³.' },
+{ topic:'Week 5 · FR vs NFR', q:'What does IEEE 830 actually define?',
+  opts:['How to elicit requirements from stakeholders','The structure and qualities of a good Software Requirements Specification','The programming language a system must be written in','The org chart for a requirements team'],
+  a:1, why:'IEEE 830 defines what a good SRS should look like (correct, unambiguous, complete, verifiable, etc.) — not how to gather requirements.' },
 
-{ topic:'Complexity', q:'Sequential search: which trio is right?',
-  opts:['B=1, W=n, A=(n+1)/2 when the key is present','B=n, W=1, A=n/2','B=1, W=log n, A=log n','B=0, W=n, A=n'],
-  a:0, why:'Best case the key is in slot 1; worst case it is last or absent, giving n; average with the key certainly present is (n+1)/2.' },
+/* ---- Week 6: design & security ---- */
+{ topic:'Week 6 · Design', q:'A module that does one well-defined job has…',
+  opts:['High coupling','High cohesion','Low information hiding','Low abstraction'],
+  a:1, why:'High cohesion means the responsibilities inside a module closely relate to one another — one clear job.' },
 
-{ topic:'Complexity', q:'The general average case for sequential search, where p is the probability the key is present, is…',
-  opts:['(n+1)/2','n(1 − p/2) + p/2','p·n','n/2 + p'],
-  a:1, why:'E(n) = 1·(p/n) + 2·(p/n) + … + n·(p/n) + n·(1−p) = n(1 − p/2) + p/2. Check it: p=1 gives (n+1)/2, p=0 gives n.' },
+{ topic:'Week 6 · Design', q:'The rule of thumb every textbook repeats for good design is…',
+  opts:['High cohesion and high coupling','Low cohesion and low coupling','High cohesion and low coupling','Low cohesion and high coupling'],
+  a:2, why:'Aim for high cohesion (one job per module) and low coupling (modules depend on each other as little as possible).' },
 
-{ topic:'Complexity', q:'An algorithm has an every-case time complexity when…',
-  opts:['it never loops','the basic operation count is the same for every input of size n','best and worst differ by a constant','it is recursive'],
-  a:1, why:'T(n) is defined as the number of times the basic operation is done for an instance of size n — it only exists when that count does not vary across inputs of the same size. Sequential search has no T(n); summing an array does.' },
+{ topic:'Week 6 · Design', q:'In a layered architecture, the Presentation Layer should NOT…',
+  opts:['Display a web interface to the user','Talk to the database directly','Handle button clicks','Show forms to the user'],
+  a:1, why:'The Presentation Layer should only talk to the Business Logic Layer — going straight to the database breaks the layering.' },
 
-{ topic:'Complexity', q:'W(n) for binary search is…',
-  opts:['n','⌈log₂(n+1)⌉','n/2','log₂ n − 1'],
-  a:1, why:'From 2⁰ + 2¹ + … + 2^(i−1) = 2^i − 1 = n we get i = log₂(n+1), and the ceiling because you cannot do a fractional pass. Equivalently ⌊log₂ n⌋ + 1. Simplified to log₂ n for order purposes.' },
+{ topic:'Week 6 · UML', q:'What is the difference between include and extend in a use case diagram?',
+  opts:['Include is for actors; extend is for use cases','Include means one use case always triggers another; extend means an optional behaviour happens only under certain conditions','They mean exactly the same thing','Extend always happens; include is optional'],
+  a:1, why:'«include» = always triggered every run. «extend» = optional, conditional extra behaviour.' },
 
-{ topic:'Complexity', q:'On an array of 1,048,576 items, sequential search does about 1,048,576 comparisons. Binary search does about…',
-  opts:['1,024','512','21','100'],
-  a:2, why:'log₂(1,048,576) = 20, so 21 with the +1. This is the row from the efficiency comparison table in Lecture 2.1.' },
+{ topic:'Week 6 · UML', q:'What is the difference between aggregation and composition?',
+  opts:['Aggregation is drawn with a filled diamond, composition with a hollow one','In aggregation the part can exist independently of the whole; in composition it cannot','They are two names for the same relationship','Composition only applies to interfaces'],
+  a:1, why:'Aggregation (hollow diamond) — the part can exist independently. Composition (filled diamond) — the part cannot exist without the whole.' },
 
-{ topic:'Complexity', q:'The number of terms computed by the RECURSIVE Fibonacci for input n is…',
-  opts:['n + 1','2n','greater than 2^(n/2)','n log n'],
-  a:2, why:'The call tree branches twice at each level and recomputes the same subproblems, giving more than 2^(n/2) terms — over a million by n = 40, where the iterative version computes 41.' },
+{ topic:'Week 6 · UML', q:'A hollow triangle arrow pointing to a parent class represents…',
+  opts:['Association','Aggregation','Composition','Generalization (inheritance)'],
+  a:3, why:'Generalization is the "is-a" relationship, drawn with a hollow triangle pointing to the parent class.' },
 
-{ topic:'Complexity', q:'B(n) ≤ A(n) ≤ W(n). When T(n) exists, what is true?',
-  opts:['T(n) = W(n) only','T(n) = B(n) = A(n) = W(n)','T(n) = A(n) only','T(n) is the average of B and W'],
-  a:1, why:'If the count is identical for every input of size n, then best, average and worst all equal that same count.' },
+{ topic:'Week 6 · Security', q:'Name the three parts of the CIA triad.',
+  opts:['Confidentiality, Integrity, Availability','Certainty, Isolation, Authentication','Confidentiality, Isolation, Auditability','Compliance, Integrity, Access'],
+  a:0, why:'Confidentiality (only authorised people see data), Integrity (data is accurate/unaltered), Availability (system accessible when needed).' },
 
-/* ---- Week 3 ---- */
-{ topic:'Big O', q:'Big O notation describes…',
-  opts:['the exact running time','an asymptotic upper bound','an asymptotic lower bound','the average case only'],
-  a:1, why:'Big O puts an asymptotic upper bound on a function. The lower bound is Ω (omega), which this course does not cover.' },
+{ topic:'Week 6 · Security', q:'Which secure design principle directly defends against SQL injection?',
+  opts:['Least privilege','Defense in depth','Input validation','Fail securely'],
+  a:2, why:'Input validation means never trusting data from a user or external system, and checking it before acting on it.' },
 
-{ topic:'Big O', q:'The formal definition of f(n) being O(g(n)) requires positive constants c and N such that…',
-  opts:['f(n) = c·g(n) for all n','0 ≤ f(n) ≤ c·g(n) for all n ≥ N','f(n) ≥ c·g(n) for all n ≥ N','f(n) < g(n) for all n'],
-  a:1, why:'0 ≤ f(n) ≤ c·g(n) for all n ≥ N. You only need to find ONE pair (c, N) that works, not the best pair.' },
+{ topic:'Week 6 · Security', q:'What is the difference between authentication and authorisation?',
+  opts:['They mean the same thing','Authentication confirms who someone is; authorisation confirms what they are allowed to do once logged in','Authorisation happens before authentication','Authentication only applies to administrators'],
+  a:1, why:'Authentication = logging in (who you are). Authorisation = what you can do once logged in.' },
 
-{ topic:'Big O', q:'For n² + 3n + 4, the lecture picks which constants?',
-  opts:['c = 1, N = 1','c = 8, N = 1','c = 3, N = 4','c = 4, N = 3'],
-  a:1, why:'Bound each term by the highest power: n² + 3n + 4 ≤ n² + 3n² + 4n² = 8n² for n > 0. So c = 8 and N = 1. c = 2 with N = 10 also works — the answer O(n²) is the same.' },
-
-{ topic:'Big O', q:'5n² + 100 is called a…',
-  opts:['complete quadratic function','pure quadratic function','cubic function','linear function'],
-  a:1, why:'Pure quadratic contains no linear term. 0.1n² + n + 100 would be complete quadratic because it has the n term. Both are O(n²).' },
-
-{ topic:'Big O', q:'0.1n³ + 10n² + 5n + 25 is of order…',
-  opts:['O(n)','O(n²)','O(n³)','O(n⁴)'],
-  a:2, why:'Throw away low-order terms when classifying complexity functions — only the highest power survives, and its coefficient is discarded too.' },
-
-{ topic:'Big O', q:'Which order grows the slowest?',
-  opts:['O(n log n)','O(log n)','O(n)','O(1)'],
-  a:3, why:'O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(n³) < O(2ⁿ).' },
-
-{ topic:'Big O', q:'Insertion sort on a reverse-sorted array does how many comparisons?',
-  opts:['n − 1','n(n−1)/2','n log n','n²+n'],
-  a:1, why:'Every element must travel to the front, so pass i does i comparisons: 1 + 2 + … + (n−1) = n(n−1)/2, which is O(n²).' },
-
-{ topic:'Big O', q:'Insertion sort on an ALREADY SORTED array is…',
-  opts:['O(n²)','O(n log n)','O(n)','O(1)'],
-  a:2, why:'The while condition arr[j] > key fails immediately on every pass, so there is one comparison per pass and no shifting: n − 1 comparisons, which is O(n).' },
-
-{ topic:'Big O', q:'The average case of insertion sort is…',
-  opts:['O(n)','O(n log n)','O(n²)','O(2ⁿ)'],
-  a:2, why:'E(s[k]) = (k+1)/2 for each element, summing to about n²/4 — approximately n², hence O(n²). Halving the worst case does not change the order.' },
-
-{ topic:'Big O', q:'Big O order for inserting an element in the worst case:',
-  opts:['array O(1), linked list O(n)','array O(n), linked list O(1)','both O(n)','both O(1)'],
-  a:1, why:'An array insert may shift every following element (O(n)); a linked list insert just relinks pointers (O(1)). Retrieval is the reverse: array O(1), linked list O(n).' },
-
-{ topic:'Big O', q:'Is it correct to say 3n² + 5n is O(n³)?',
-  opts:['No, the order must match exactly','Yes, but it is a loose bound — O(n²) is the useful answer','No, you cannot mix powers','Only for n < 10'],
-  a:1, why:'Big O is an upper bound, so any dominating function is technically valid. In an exam, always give the tightest bound.' },
-
-{ topic:'Big O', q:'What does the lecture list as a way to write efficient algorithms?',
-  opts:['Write everything recursively','Use built-in algorithms with a known Big O order','Always prefer arrays','Avoid data structures'],
-  a:1, why:'The list is: good programming skills; use built-in algorithms which are well tested and have a known Big O order; good analytical ability and mathematics; know the strengths and weaknesses of data structures.' }
+{ topic:'Week 6 · Security', q:'Overwhelming a system with traffic so it cannot serve real users is an attack on which part of the CIA triad specifically?',
+  opts:['Confidentiality','Integrity','Availability','All three equally'],
+  a:2, why:'A Denial-of-Service (DoS/DDoS) attack targets availability — the system becomes unreachable for legitimate users.' }
 ];
 
 /* ============================================================
@@ -254,161 +220,92 @@ const QUIZ_BANK = [
    ============================================================ */
 
 const EXERCISES_SECTION = {
-  id: 'exercises', group: 'Practice', nav: 'Code exercises',
+  id: 'exercises', group: 'Practice', nav: 'Exercises',
   eyebrow: 'Practice',
-  title: 'Code exercises',
-  lede: 'Type the missing piece and check it. Case matters for Java keywords; the complexity answers accept the usual spellings.',
+  title: 'Exercises',
+  lede: 'Type the missing piece and check it, order the phases, or classify each item. These mix material from all six weeks.',
   blocks: [
 
-    { t:'h', x:'Java: inheritance and access' },
+    { t:'h', x:'Week 1–2: foundations' },
 
-    { t:'fill', id:'ex1', title:'Exercise 1 — set up the inheritance', lang:'java',
-      prompt:'Cylinder should be a specialised Circle, and should reuse Circle\'s constructor.',
-      code:'class Cylinder {{0}} Circle {\n   protected double length;\n   public Cylinder(double radius, double length) {\n      {{1}}(radius);\n      {{2}}.length = length;\n   }\n}',
-      answers:[['extends'],['super'],['this']],
-      hint:'One keyword builds the relationship, one calls the parent constructor, one resolves the clash between the parameter `length` and the field `length`.',
-      sol:'`extends Circle`, `super(radius)` and `this.length = length`. Without `this.`, the assignment `length = length` would just assign the parameter to itself.' },
+    { t:'fill', id:'ex1', title:'Exercise 1 — the four layers', lang:'text',
+      prompt:'Fill in Pressman\u2019s four layers of software engineering, from the foundation upward.',
+      code:'Foundation: quality {{0}}\nThen: {{1}}  (the steps, in order)\nThen: {{2}}  (the technical how-to at each step)\nThen: {{3}}  (automation supporting it all)',
+      answers:[['focus'],['process'],['methods'],['tools']],
+      hint:'Quality focus is the foundation everything else rests on.',
+      sol:'Quality focus \u2192 process \u2192 methods \u2192 tools.' },
 
-    { t:'fill', id:'ex2', title:'Exercise 2 — the four access levels', lang:'text',
-      prompt:'Write the Java keyword for each UML symbol. For the default level, write the word the lecture uses.',
-      code:'-  ->  {{0}}\n~  ->  {{1}}\n#  ->  {{2}}\n+  ->  {{3}}',
-      answers:[['private'],['package','default'],['protected'],['public']],
-      hint:'Narrowest to widest.',
-      sol:'`private` (−), `package` (~, the default when you write no modifier), `protected` (#), `public` (+).' },
+    { t:'fill', id:'ex2', title:'Exercise 2 — the six SDLC phases', lang:'text',
+      prompt:'Fill in the six SDLC phases in order.',
+      code:'1. {{0}}\n2. Design\n3. {{1}}\n4. Testing\n5. {{2}}\n6. Maintenance',
+      answers:[['Requirements','requirements'],['Implementation','implementation'],['Deployment','deployment']],
+      hint:'What → how → build → check → ship → keep working.',
+      sol:'Requirements, Design, Implementation, Testing, Deployment, Maintenance.' },
 
-    { t:'fill', id:'ex3', title:'Exercise 3 — overriding toString()', lang:'java',
-      prompt:'Complete the override so that println(student) prints the student\'s details. Which class does toString() come from?',
-      code:'public {{0}} toString() {\n   return name + String.valueOf(id) + major;\n}\n// toString() is inherited from the {{1}} class',
-      answers:[['String'],['Object']],
-      hint:'The method returns a string representation. Every Java class implicitly extends one root class.',
-      sol:'`public String toString()`, inherited from `Object` — the root of the Java class hierarchy. Overriding it changes what `System.out.println(obj)` prints.' },
+    { t:'fill', id:'ex3', title:'Exercise 3 — verification or validation?', lang:'text',
+      prompt:'Write V1 for verification or V2 for validation.',
+      code:'"Are we building the product right?"     ->  {{0}}\n"Are we building the right product?"     ->  {{1}}',
+      answers:[['V1','v1'],['V2','v2']],
+      hint:'Verification checks against the spec. Validation checks against the real need.',
+      sol:'"Building the product right" is Verification. "Building the right product" is Validation.' },
 
-    { t:'h', x:'Java: polymorphism and casting' },
+    { t:'h', x:'Week 3: process models' },
 
-    { t:'fill', id:'ex4', title:'Exercise 4 — which lines compile?', lang:'text',
-      prompt:'Given `base b = new base();` and `derived d = new derived();`, write OK or ERROR for each line.',
-      code:'b = d;              ->  {{0}}\nd = b;              ->  {{1}}\nd = (derived) b;    ->  {{2}} at compile time\nb = (base) d;       ->  {{3}}',
-      answers:[['OK','ok'],['ERROR','error'],['OK','ok'],['OK','ok']],
-      hint:'Upcasting is implicit; narrowing assignment without a cast is a compile error; a cast always satisfies the compiler.',
-      sol:'`b = d;` OK (implicit upcast). `d = b;` compile ERROR (narrowing assignment). `d = (derived) b;` compiles fine — but throws at run time because the object really is only a base. `b = (base) d;` OK, an optional explicit upcast.' },
+    { t:'fill', id:'ex4', title:'Exercise 4 — V-Model pairings', lang:'text',
+      prompt:'Complete each testing pair.',
+      code:'Coding            pairs with  {{0}} Testing\nModule Design     pairs with  {{1}} Testing\nSystem Design     pairs with  {{2}} Testing\nRequirements      pairs with  {{3}} Testing',
+      answers:[['Unit','unit'],['Integration','integration'],['System','system'],['Acceptance','acceptance']],
+      hint:'The left, descending side of the V lists development phases; the right, ascending side lists testing phases in reverse order.',
+      sol:'Unit \u2194 Coding, Integration \u2194 Module Design, System \u2194 System Design, Acceptance \u2194 Requirements.' },
 
-    { t:'fill', id:'ex5', title:'Exercise 5 — guard the downcast', lang:'java',
-      prompt:'Verify the type before casting.',
-      code:'if (a1 {{0}} Dog) {\n   Dog d = ({{1}}) a1;\n   d.work();\n}',
-      answers:[['instanceof'],['Dog']],
-      hint:'An operator that returns a boolean, then an explicit cast.',
-      sol:'`instanceof` verifies the nature of the object; `(Dog)` performs the explicit narrowing cast. instanceof also works to test whether a class implements an interface.' },
+    { t:'pairs', id:'ex5', title:'Exercise 5 — which model fits?', prompt:'Match each scenario to the best-fitting process model.',
+      cats:['Waterfall','Incremental','V-Model'],
+      items:[
+        {x:'A government e-Tax system where tax rules are fixed by law before development starts.', a:'Waterfall'},
+        {x:'A grid control system for Energy Fiji Limited, where a fault could cause blackouts.', a:'V-Model'},
+        {x:'A mobile money app that wants to launch person-to-person transfer first, then add features.', a:'Incremental'}
+      ]},
 
-    { t:'fill', id:'ex6', title:'Exercise 6 — static or dynamic?', lang:'text',
-      prompt:'Write STATIC or DYNAMIC for how each is bound.',
-      code:'Instance methods    ->  {{0}}\nInstance variables  ->  {{1}}\nStatic methods      ->  {{2}}\nShadowed variables  ->  {{3}}',
-      answers:[['DYNAMIC','dynamic'],['STATIC','static'],['STATIC','static'],['STATIC','static']],
-      hint:'Only one row is dynamic.',
-      sol:'Instance methods are the ONLY dynamically bound case. Everything else — instance variables, static variables, static methods, shadowed variables — is statically bound from the declared type.' },
+    { t:'h', x:'Week 4: Agile, Scrum, XP' },
 
-    { t:'h', x:'Java: abstract, interfaces, cloning' },
+    { t:'fill', id:'ex6', title:'Exercise 6 — Scrum\u2019s three roles', lang:'text',
+      prompt:'Name the three Scrum roles.',
+      code:'Owns the Product Backlog:              {{0}}\nProtects the team\u2019s process:            {{1}}\nBuilds the Increment each Sprint:       {{2}}',
+      answers:[['Product Owner','product owner'],['Scrum Master','scrum master'],['Development Team','development team']],
+      hint:'Exactly three, no overlap.',
+      sol:'Product Owner, Scrum Master, Development Team.' },
 
-    { t:'fill', id:'ex7', title:'Exercise 7 — abstract class', lang:'java',
-      prompt:'shape forces every subclass to define draw(), but shares set_color().',
-      code:'{{0}} class shape {\n   private String color;\n   public void set_color(String color) { this.color = color; }\n   public {{1}} void draw();\n}',
-      answers:[['abstract'],['abstract']],
-      hint:'Both gaps take the same keyword.',
-      sol:'`abstract class shape` and `public abstract void draw();`. A class containing an abstract method must itself be declared abstract. Note there are no braces after draw() — just a semicolon.' },
+    { t:'fill', id:'ex7', title:'Exercise 7 — the Red-Green-Refactor loop', lang:'text',
+      prompt:'Complete the TDD cycle.',
+      code:'1. Write a {{0}} test (red)\n2. Write {{1}} code to pass it (green)\n3. {{2}} the code without changing its behaviour',
+      answers:[['failing','fail'],['minimal','minimum'],['Refactor','refactor']],
+      hint:'Red = fails. Green = passes. Then clean up.',
+      sol:'Write a failing test, write minimal code to pass it, then refactor.' },
 
-    { t:'fill', id:'ex8', title:'Exercise 8 — interface vs class', lang:'java',
-      prompt:'One keyword for taking on an interface, one for extending a class, one for combining interfaces.',
-      code:'class circle {{0}} shape { }            // shape is an interface\nclass Dog {{1}} Animal { }             // Animal is a class\ninterface amphibian {{2}} aquatic, terrestrial { }',
-      answers:[['implements'],['extends'],['extends']],
-      hint:'An interface extends another interface — it never "implements" one.',
-      sol:'A class `implements` an interface and `extends` a class. An interface `extends` other interfaces, and unlike a class it may extend more than one.' },
+    { t:'h', x:'Week 5: requirements' },
 
-    { t:'fill', id:'ex9', title:'Exercise 9 — deep clone', lang:'java',
-      prompt:'Complete the override that turns a shallow clone into a one-level deep clone.',
-      code:'public Object clone() {\n   try {\n      Student s = (Student) {{0}}.clone();\n      s.c = (course[]) this.c.{{1}}();\n      return s;\n   }\n   catch ({{2}} e) { return null; }\n}',
-      answers:[['super'],['clone'],['CloneNotSupportedException']],
-      hint:'Start with the parent\'s shallow copy, then clone the array yourself. The exception is thrown when a class is not Cloneable.',
-      sol:'`super.clone()` gives the shallow copy, `this.c.clone()` duplicates the array, and `CloneNotSupportedException` must be caught because Object.clone() declares it.' },
+    { t:'fill', id:'ex8', title:'Exercise 8 — functional or non-functional', lang:'text',
+      prompt:'Write FR or NFR for each statement.',
+      code:'"A patient shall be able to join the waitlist."          ->  {{0}}\n"Notifications shall be sent within 1 minute."           ->  {{1}}\n"Only the patient may view their own waitlist place."    ->  {{2}}',
+      answers:[['FR','fr'],['NFR','nfr'],['NFR','nfr']],
+      hint:'"What must it do" is functional; "how well" is non-functional.',
+      sol:'Joining the waitlist is a feature (FR). Timing and security are qualities (NFR).' },
 
-    { t:'h', x:'Complexity: find T(n)' },
+    { t:'h', x:'Week 6: design & security' },
 
-    { t:'fill', id:'ex10', title:'Exercise 10 — single loop', lang:'text',
-      prompt:'Give T(n) and the Big O order.',
-      code:'for (i = 0; i < n; i++)\n   sum = sum + a[i];\n\nT(n) = {{0}}          order = O({{1}})',
-      answers:[['n'],['n']],
-      hint:'The loop body runs once per iteration and there are n iterations.',
-      sol:'T(n) = n, which is O(n). This is the every-case example from Lecture 2.2 — the count does not depend on the array contents.' },
+    { t:'fill', id:'ex9', title:'Exercise 9 — cohesion and coupling', lang:'text',
+      prompt:'Fill in high or low.',
+      code:'Aim for {{0}} cohesion (one clear job per module)\nAim for {{1}} coupling (modules depend on each other as little as possible)',
+      answers:[['high','High'],['low','Low']],
+      hint:'The rule every textbook repeats.',
+      sol:'High cohesion, low coupling.' },
 
-    { t:'fill', id:'ex11', title:'Exercise 11 — triangular double loop', lang:'text',
-      prompt:'Give the closed form and the order.',
-      code:'for (i = 0; i < n; i++)\n   for (j = i+1; j < n; j++)\n      compare(S[i], S[j]);\n\nT(n) = n(n-{{0}})/{{1}}      order = O(n^{{2}})',
-      answers:[['1'],['2'],['2']],
-      hint:'(n−1) + (n−2) + … + 1.',
-      sol:'T(n) = n(n−1)/2, which is O(n²). This is exchange sort. The comparison has an every-case complexity; the exchange does not, because it only happens when the condition is true.' },
-
-    { t:'fill', id:'ex12', title:'Exercise 12 — triple loop', lang:'text',
-      prompt:'Give the order for matrix multiplication.',
-      code:'for (i = 0; i < n; i++)\n   for (j = 0; j < n; j++)\n      for (k = 0; k < n; k++)\n         C[i][j] = C[i][j] + A[i][k]*B[k][j];\n\nT(n) = n^{{0}}      order = O(n^{{1}})',
-      answers:[['3'],['3']],
-      hint:'Three independent loops, each running n times.',
-      sol:'T(n) = n³, order O(n³). Every one of the three loops runs the full n times regardless of the data, so this has an every-case complexity.' },
-
-    { t:'fill', id:'ex13', title:'Exercise 13 — the three cases', lang:'text',
-      prompt:'Fill in the best, worst and average for sequential search on an array of size n, assuming the key is definitely present.',
-      code:'B(n) = {{0}}\nW(n) = {{1}}\nA(n) = ({{2}} + 1)/2',
-      answers:[['1'],['n'],['n']],
-      hint:'Best = key in the first slot. Worst = key in the last slot.',
-      sol:'B(n) = 1, W(n) = n, A(n) = (n+1)/2. If the key might be absent, the general formula is A(n) = n(1 − p/2) + p/2 where p is the probability it is present.' },
-
-    { t:'fill', id:'ex14', title:'Exercise 14 — binary search worst case', lang:'text',
-      prompt:'Complete the derivation.',
-      code:'2^0 + 2^1 + ... + 2^(i-1) = 2^i - {{0}} = n\n\n=>   i = log2(n + {{1}})\n\norder = O({{2}} n)',
-      answers:[['1'],['1'],['log']],
-      hint:'A geometric series of powers of two, then take logs.',
-      sol:'2^i − 1 = n gives i = log₂(n+1), so W(n) = ⌈log₂(n+1)⌉ = ⌊log₂ n⌋ + 1, which is O(log n).' },
-
-    { t:'h', x:'Big O' },
-
-    { t:'fill', id:'ex15', title:'Exercise 15 — the formal definition', lang:'text',
-      prompt:'Write the definition. Use <= for the inequality and >= where needed.',
-      code:'f(n) is O(g(n)) if there are positive constants c and N such that\n\n   0 {{0}} f(n) {{1}} c * g(n)   for all n {{2}} N',
-      answers:[['<=','≤'],['<=','≤'],['>=','≥']],
-      hint:'Sandwich f(n) between zero and c times g(n), past some threshold.',
-      sol:'0 ≤ f(n) ≤ c·g(n) for all n ≥ N. You only need one working pair (c, N), not the tightest one.' },
-
-    { t:'fill', id:'ex16', title:'Exercise 16 — find c and N', lang:'text',
-      prompt:'Bound n² + 3n + 4 by replacing every lower term with n². Fill in the coefficients.',
-      code:'n^2 + 3n + 4  <=  n^2 + {{0}}n^2 + {{1}}n^2  =  {{2}}n^2   for n > 0\n\nso c = {{3}} and N = 1, giving O(n^2)',
-      answers:[['3'],['4'],['8'],['8']],
-      hint:'For n ≥ 1 you have n ≤ n² and 1 ≤ n². Then add the coefficients.',
-      sol:'3n ≤ 3n² and 4 ≤ 4n², so the whole thing is at most (1+3+4)n² = 8n². Therefore c = 8 and N = 1, and the order is O(n²).' },
-
-    { t:'fill', id:'ex17', title:'Exercise 17 — classify', lang:'text',
-      prompt:'Give the tightest Big O order. Write like n^2, log n, 2^n, or 1.',
-      code:'100n + 3               ->  O({{0}})\n0.01n^2                ->  O({{1}})\nn(n-1)/2               ->  O({{2}})\n2^(n/2)                ->  O({{3}})',
-      answers:[['n'],['n^2','n2','n²'],['n^2','n2','n²'],['2^n','2n','2ⁿ']],
-      hint:'Drop constants and low-order terms.',
-      sol:'O(n), O(n²), O(n²), O(2ⁿ). Constants never survive: 100n is linear, and 0.01n² is still quadratic.' },
-
-    { t:'fill', id:'ex18', title:'Exercise 18 — insertion sort', lang:'text',
-      prompt:'Complete all three cases.',
-      code:'Reverse sorted:  1 + 2 + ... + (n-1) = n(n-1)/{{0}}  ->  O(n^{{1}})\nAlready sorted:  n - {{2}}                       ->  O({{3}})',
-      answers:[['2'],['2'],['1'],['n']],
-      hint:'The worst case is the triangular sum; the best case is one comparison per pass.',
-      sol:'Worst: n(n−1)/2 comparisons → O(n²). Best: n−1 comparisons → O(n). The average is also O(n²).' },
-
-    { t:'fill', id:'ex19', title:'Exercise 19 — data structure costs', lang:'text',
-      prompt:'Give the worst-case order for each operation.',
-      code:'Insert into an array        ->  O({{0}})\nInsert into a linked list   ->  O({{1}})\nRetrieve item i from array  ->  O({{2}})\nRetrieve item i from list   ->  O({{3}})',
-      answers:[['n'],['1'],['1'],['n']],
-      hint:'Arrays are good at exactly what linked lists are bad at, and vice versa.',
-      sol:'Array insert O(n) because everything after shifts; linked list insert O(1) because you just relink. Array retrieval O(1) by index arithmetic; linked list retrieval O(n) because you walk from the head. This table answers most "which data structure" questions.' },
-
-    { t:'fill', id:'ex20', title:'Exercise 20 — the two Fibonaccis', lang:'text',
-      prompt:'How many terms does each version compute, and what order is each?',
-      code:'Iterative:  {{0}} + 1 terms   ->  O({{1}})\nRecursive:  more than 2^(n/{{2}}) terms  ->  exponential',
-      answers:[['n'],['n'],['2']],
-      hint:'The iterative version fills an array once. The recursive one branches twice per level.',
-      sol:'Iterative computes n+1 terms — O(n). Recursive computes more than 2^(n/2) terms, which is over a million by n = 40 versus 41 for the iterative version.' }
+    { t:'fill', id:'ex10', title:'Exercise 10 — the CIA triad', lang:'text',
+      prompt:'Name the three parts of the CIA triad.',
+      code:'C = {{0}}\nI = {{1}}\nA = {{2}}',
+      answers:[['Confidentiality','confidentiality'],['Integrity','integrity'],['Availability','availability']],
+      hint:'Only authorised people can see it, it hasn\u2019t been improperly changed, and it\u2019s accessible when needed.',
+      sol:'Confidentiality, Integrity, Availability.' }
   ]
 };
 
@@ -416,12 +313,106 @@ const QUIZ_SECTION = {
   id: 'quiz', group: 'Practice', nav: 'Quiz',
   eyebrow: 'Practice',
   title: 'Quiz',
-  lede: 'Ten questions at a time, drawn from all three weeks. Every answer comes with the reasoning, so a wrong one is still worth something.',
+  lede: 'Ten questions at a time, drawn from all six weeks. Every answer comes with the reasoning, so a wrong one is still worth something.',
   blocks: [ { t:'quiz' } ]
 };
 
-/* insert the two practice sections right after the labs page */
+const CHEATSHEET_SECTION = {
+  id: 'cheatsheet', group: 'Practice', nav: 'Cheat sheet',
+  eyebrow: 'Reference',
+  title: 'Everything on one page',
+  lede: 'For the night before (or the morning of). If you can reconstruct this page from memory, you are ready.',
+  blocks: [
+
+    { t:'h', x:'Week 1 — the profession & ethics' },
+    { t:'ul', x:[
+      'Software = code + data + documentation.',
+      'COTS/generic = built once, sold to many (Word). Bespoke/custom = built for one customer (M-PAiSA).',
+      'IEEE definition: systematic, disciplined, quantifiable approach to development/operation/maintenance.',
+      'Four layers (bottom to top): quality focus \u2192 process \u2192 methods \u2192 tools.',
+      'Four core roles: Developer, Tester/QA, Analyst, Project Manager.',
+      'Emerging roles: DevOps Engineer, Site Reliability Engineer, Data/ML Engineer, Security Engineer.',
+      'Law = minimum standard, government-set. Ethics = personal standard, broader than law.',
+      'Four areas of responsibility (plain version): Confidentiality, Competence, Intellectual Property, No Misuse.',
+      'ACM/IEEE Code of Ethics — 8 areas: Public, Client & Employer, Product, Judgement, Management, Profession, Colleagues, Self.',
+      'Boeing 737 MAX: 1 sensor, no backup, 346 deaths — breached Public & Judgement.',
+      'Knight Capital (2012): dormant "Power Peg" code + unpatched server \u2192 $440m lost in 45 minutes.'
+    ]},
+
+    { t:'h', x:'Week 2 — the SDLC' },
+    { t:'formula', x:'Requirements \u2192 Design \u2192 Implementation \u2192 Testing \u2192 Deployment \u2192 Maintenance' },
+    { t:'ul', x:[
+      'Why structure matters: predictability, quality control, shared understanding.',
+      'Boehm\u2019s cost-of-change curve: a mistake caught in Requirements ~ 1 hour to fix; caught after deployment ~ 50\u2013200x more.',
+      'Verification = building the product RIGHT (matches spec). Validation = building the RIGHT product (matches real need).',
+      'Traceability = requirement \u2192 design decision \u2192 code \u2192 test case.',
+      'SRS = Software Requirements Specification (functional + non-functional requirements).',
+      'Maintenance types: Corrective (fix bugs), Adaptive (environment changed), Perfective (new feature/performance), Preventive (refactor).',
+      'Over 70% of a system\u2019s total lifetime cost is spent AFTER launch, in maintenance.'
+    ]},
+
+    { t:'h', x:'Week 3 — Waterfall, Incremental, V-Model' },
+    { t:'table', head:['','Waterfall','Incremental','V-Model'], rows:[
+      ['Shape', 'One pass, strict order', 'Small repeated cycles', 'Waterfall bent into a V'],
+      ['Flexibility', 'Low', 'Moderate', 'Low'],
+      ['Testing', 'At the end', 'Within each increment', 'Planned alongside each phase'],
+      ['Working software', 'Only at the end', 'Early and often', 'Only at the end'],
+      ['Best for', 'Stable, regulated, short projects', 'Medium projects needing feedback', 'Safety-critical / regulated systems'],
+      ['Traces to / example', 'Winston Royce, 1970', 'M-PAiSA rollout', 'EFL grid control']
+    ]},
+    { t:'ul', x:[
+      'V-Model pairings: Coding\u2194Unit, Module Design\u2194Integration, System Design\u2194System, Requirements\u2194Acceptance.',
+      'Left side of the V = verification. Right side = validation.'
+    ]},
+
+    { t:'h', x:'Week 4 — Agile, Scrum, XP' },
+    { t:'ul', x:[
+      'Manifesto 4 values (each "X over Y"): Individuals & interactions, Working software, Customer collaboration, Responding to change.',
+      'Snowbird meeting, Feb 2001, 17 authors, invited by Robert C. Martin. Agile was NAMED there, not invented — Scrum (1993) and XP (1996\u201399) already existed.',
+      'Scrum roles (3): Product Owner, Scrum Master, Development Team.',
+      'Scrum artifacts (3): Product Backlog, Sprint Backlog, Increment.',
+      'Scrum events (5, not 4!): the Sprint itself, + Sprint Planning, Daily Scrum, Sprint Review, Sprint Retrospective.',
+      'Sprint Review = with stakeholders. Retrospective = team only.',
+      'XP practices: Pair Programming, TDD, Continuous Integration, Refactoring, Simple Design, Collective Code Ownership.',
+      'Red-Green-Refactor: failing test \u2192 minimal code to pass \u2192 refactor.',
+      'XP was born on Chrysler\u2019s C3 payroll project (Kent Beck, 1996); the project itself was later cancelled (2000).',
+      'Flexibility to change across all 4 models: Waterfall Low, Incremental Moderate, V-Model Low, Agile High.'
+    ]},
+
+    { t:'h', x:'Week 5 — requirements engineering' },
+    { t:'ul', x:[
+      'User requirement = plain language, for stakeholders. System requirement = precise, for developers.',
+      'Sommerville\u2019s RE process: Elicitation & Analysis \u2192 Specification \u2192 Validation, wrapped by Requirements Management.',
+      'Pressman\u2019s 7 tasks: Inception, Elicitation, Elaboration, Negotiation, Specification, Validation, Management.',
+      'London Ambulance Service (1992): CAD system abandoned within ~9 days — a requirements engineering failure (poor consultation, unrealistic timeline), not a coding failure.',
+      'Interviews: deep but slow, few people. Questionnaires: fast, many people, no follow-up. Observation (ethnography): reveals real behaviour, slow, people act differently when watched.',
+      'JAD (Joint Application Design) — IBM, late 1970s: one structured workshop instead of separate interviews.',
+      'Functional = WHAT the system does. Non-functional = HOW WELL it does it (performance, usability, reliability, security, portability, maintainability).',
+      'A system can meet every functional requirement and still fail if non-functional requirements are not met.',
+      'IEEE 830 (1984): defines what a good SRS looks like (correct, unambiguous, complete, consistent, ranked, verifiable, modifiable, traceable) — NOT how to gather requirements.'
+    ]},
+
+    { t:'h', x:'Week 6 — design & cybersecurity' },
+    { t:'ul', x:[
+      'Cohesion = how related a module\u2019s responsibilities are (aim HIGH). Coupling = how much a module depends on another\u2019s internals (aim LOW).',
+      'Abstraction, Architecture, Modularity, Information hiding, Functional independence (= cohesion + coupling), Refinement/refactoring.',
+      'Architectural styles: Layered, Client-server, Microservices.',
+      'USP Portal layers: Presentation \u2192 Business Logic \u2192 Data Access \u2192 Database (each only talks to its neighbour).',
+      'Use case diagram: Actor (stick figure), Use Case (oval), System Boundary (box), Association (line), Include/Extend (dashed arrow).',
+      'Include = always triggers. Extend = optional, conditional.',
+      'Class diagram: Class (3-part box), Association (line + multiplicity), Generalization (hollow triangle, "is-a"), Aggregation (hollow diamond, part survives), Composition (filled diamond, part does not survive).',
+      'CIA triad: Confidentiality, Integrity, Availability.',
+      'Threats: Phishing, Malware, SQL Injection, DoS/DDoS (targets availability), Privilege escalation.',
+      'Principles: Least privilege, Defense in depth, Input validation (defends SQL injection), Fail securely.',
+      'Authentication = who you are (login). Authorisation = what you can do once logged in.'
+    ]},
+
+    { t:'note', k:'exam', title:'If you only remember five things', x:'1) The six SDLC phases, in order. 2) Boehm\u2019s cost-of-change curve. 3) Waterfall/Incremental/V-Model/Agile flexibility ranking: Low, Moderate, Low, High. 4) Scrum = 3 roles, 3 artifacts, 5 events. 5) High cohesion, low coupling.' }
+  ]
+};
+
+/* insert the practice sections right after Week 6 */
 (function(){
-  const i = SECTIONS.findIndex(s => s.id === 'lab');
-  SECTIONS.splice(i + 1, 0, EXERCISES_SECTION, QUIZ_SECTION);
+  const i = SECTIONS.findIndex(s => s.id === 'w6');
+  SECTIONS.splice(i + 1, 0, EXERCISES_SECTION, QUIZ_SECTION, CHEATSHEET_SECTION);
 })();

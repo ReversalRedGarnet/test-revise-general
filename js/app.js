@@ -1,5 +1,5 @@
 /* ============================================================
-   CS214 Revise — router, renderer, activities, progress
+   CS160 Revise — router, renderer, activities, progress
    ============================================================ */
 
 /* ---------- pull in the extra pages defined in primer.js ---------- */
@@ -24,22 +24,22 @@ const Store = (function(){
       catch(e){ /* private browsing — carry on */ }
     },
     clear(){
-      try { if (ok){ ['cs214.done','cs214.answers','cs214.quiz'].forEach(k => localStorage.removeItem(k)); } mem = {}; }
+      try { if (ok){ ['cs160.done','cs160.answers','cs160.quiz'].forEach(k => localStorage.removeItem(k)); } mem = {}; }
       catch(e){}
     }
   };
 })();
 
-let DONE    = Store.get('cs214.done', {});
-let ANSWERS = Store.get('cs214.answers', {});
+let DONE    = Store.get('cs160.done', {});
+let ANSWERS = Store.get('cs160.answers', {});
 
 function markDone(id){
   if (!id || DONE[id]) return;
   DONE[id] = true;
-  Store.set('cs214.done', DONE);
+  Store.set('cs160.done', DONE);
   paintProgress();
 }
-function saveAnswer(id, val){ ANSWERS[id] = val; Store.set('cs214.answers', ANSWERS); }
+function saveAnswer(id, val){ ANSWERS[id] = val; Store.set('cs160.answers', ANSWERS); }
 
 /* ---------- activity census ---------- */
 const ACTIVITY_TYPES = {mcq:1, fill:1, reveal:1, order:1, pairs:1};
@@ -110,8 +110,8 @@ function norm(s){ return String(s == null ? '' : s).trim().toLowerCase().replace
    Reading mode — 'guided' folds the lecture content into panels,
    'full' shows every panel open.
    ============================================================ */
-let MODE = Store.get('cs214.mode', 'guided');
-function setMode(m){ MODE = m; Store.set('cs214.mode', m); paintModeBtn(); route(); }
+let MODE = Store.get('cs160.mode', 'guided');
+function setMode(m){ MODE = m; Store.set('cs160.mode', m); paintModeBtn(); route(); }
 function paintModeBtn(){
   const btn = document.getElementById('modeBtn');
   if (!btn) return;
@@ -322,10 +322,13 @@ R.steps = b => {
 R.glossary = () => {
   const wrap = el('div', {class:'no-gloss'});
   const cats = [
-    ['all',      'Everything'],
-    ['java',     'Java & objects'],
-    ['ds',       'Data structures'],
-    ['analysis', 'Efficiency & Big O']
+    ['all',    'Everything'],
+    ['gen',    'Profession & ethics'],
+    ['proc',   'Process & SDLC'],
+    ['agile',  'Agile & Scrum'],
+    ['req',    'Requirements'],
+    ['design', 'Design & UML'],
+    ['sec',    'Cybersecurity']
   ];
   const search = el('input', {type:'search', class:'gsearch', placeholder:'Type a word\u2026', 'aria-label':'Search the glossary'});
   const tabs = el('div', {class:'gtabs'});
@@ -644,7 +647,7 @@ function setState(box, kind){
    ============================================================ */
 R.quiz = () => {
   const wrap = el('div');
-  const state = Store.get('cs214.quiz', {best:0, taken:0});
+  const state = Store.get('cs160.quiz', {best:0, taken:0});
   const topics = ['All topics', ...new Set(QUIZ_BANK.map(q => q.topic))];
   const topicSel = el('select');
   topics.forEach(t => topicSel.appendChild(el('option', {value:t, text:t})));
@@ -715,9 +718,9 @@ R.quiz = () => {
 
   function finish(){
     const pct = Math.round(correct/total*100);
-    const st = Store.get('cs214.quiz', {best:0, taken:0});
+    const st = Store.get('cs160.quiz', {best:0, taken:0});
     st.taken++; if (pct > st.best) st.best = pct;
-    Store.set('cs214.quiz', st);
+    Store.set('cs160.quiz', st);
     bestStat.querySelector('b').textContent = st.best + '%';
     const verdict = pct >= 80 ? 'Solid. Move on to the exercises and the sample test.'
                   : pct >= 50 ? 'Halfway there. Re-read the pages behind the ones you missed and take another set.'
@@ -846,7 +849,7 @@ function renderSection(sec){
 
   document.querySelectorAll('#nav a').forEach(a =>
     a.classList.toggle('active', a.getAttribute('href') === '#/' + sec.id));
-  document.title = sec.title + ' — CS214 Revise';
+  document.title = sec.title + ' — CS160 Revise';
   paintProgress();
 }
 

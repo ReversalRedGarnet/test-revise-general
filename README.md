@@ -1,60 +1,52 @@
-# CS214 Revise
+# CS160 Revise
 
-An interactive revision site for **CS214 — Design & Analysis of Algorithms**, covering Weeks 1–3:
-time complexity, Big O order, and the Java programming material.
+An interactive revision site for **CS160 — Introduction to Software Engineering**,
+covering Weeks 1–6 for the Mid-Semester Test:
+the profession & ethics, the SDLC, Waterfall/Incremental/V-Model, Agile & Scrum,
+Requirements Engineering, and Design & Cybersecurity basics.
 
-Built from the Week 1–3 lecture notes, the Week 2 and Week 3 lab tutorials, and Sample Test I.
+Built from the Week 1–6 detailed notes and the lecturer's ungraded practice test.
+Every lesson page opens with a plain-English summary and a short numbered ladder
+before the lecture wording starts, and every technical word is clickable for a
+one-line definition.
 
-It assumes you are coming back to this cold. Every lesson page opens with a plain-English
-summary and a short numbered ladder before the lecture wording starts, every technical word
-is clickable for a one-line definition, and the lecture detail underneath is folded into
-panels you open one at a time.
+## Coming back to it under time pressure
 
-## Coming back to it after a while
-
-- **Dotted words are clickable.** The first time a term appears on a page it gets a dotted
-  underline; click or tap for a definition, an example, and a link to the page that teaches it.
-  All of them are on the **Glossary** page, which is searchable and filterable by area.
-- **Guided vs Full.** The button in the top bar toggles the reading mode. *Guided* (the default)
-  folds each page's lecture content into collapsible panels, one per heading, with the number of
-  activities shown on each. *Full* opens everything — better for a last-minute skim. The choice
-  is remembered and survives Reset.
-- **Start at "How to use this."** It now carries a suggested route through the material for
-  someone starting from nothing.
+- **Dotted words are clickable.** Click or tap any term with a dotted underline
+for a definition, an example, and a link to the page that teaches it. All of
+them are on the **Glossary** page, searchable and filterable by area.
+- **Guided vs Full.** The button in the top bar toggles the reading mode.
+*Guided* (default) folds each page's content into collapsible panels, one per
+heading. *Full* opens everything — better for a last-minute skim.
+- **Start at "How to use this."** It carries a suggested route through the
+material for someone with under 24 hours before the test.
 
 ## What's in it
 
-**16 pages**, 51 activities, 60 quiz questions.
+**11 pages** covering Weeks 1–6, plus Exercises, Quiz, Cheat sheet, and Glossary.
 
 | Page | Covers |
-|---|---|
-| Data structures & types | Array, stack, queue, linked list, heap, hash table, priority queue; Java data types; Collections/Arrays |
-| Inheritance & access | `extends`, `super`, `this`, the four access levels, overloading vs overriding, `Object` |
-| Polymorphism & casting | Up/downcasting, static vs dynamic binding, shadowing, `instanceof`, conversion rules |
-| Abstract & interfaces | Abstract classes, interfaces, `final`, `Comparable`, `Cloneable`, shallow vs deep clone |
-| Object relationships | Association, aggregation, composition, generalization, UML, multiplicity, singleton |
-| Efficiency: search & Fibonacci | Sequential vs binary search, recursive vs iterative Fibonacci |
-| T(n), W(n), B(n), A(n) | Every-case, worst, best and average complexity; the probability derivations |
-| Big O order | Formal definition, complexity categories, finding `c` and `N` |
-| Insertion sort & DS choice | Worst/best/average cases, insert vs retrieve costs |
-| Interactive labs | Six live tools (below) |
-| Code exercises | 20 fill-in-the-blank exercises |
-| Quiz | 10 random questions per set, filterable by topic |
-| Sample Test I | All four questions, worked through |
-| Cheat sheet | Every formula and rule on one page |
+| --- | --- |
+| Week 1 | The profession, the four layers, team roles, the ACM/IEEE Code of Ethics, Boeing 737 MAX & Knight Capital case studies |
+| Week 2 | The six SDLC phases, Boehm's cost-of-change curve, verification vs validation, maintenance types |
+| Week 3 | Waterfall, Incremental, and the V-Model — strengths, weaknesses, when each fits |
+| Week 4 | The Agile Manifesto, Scrum roles/artifacts/events, Extreme Programming |
+| Week 5 | Requirements engineering process, elicitation techniques, functional vs non-functional requirements, IEEE 830 |
+| Week 6 | Cohesion/coupling, architectural styles, UML (use case & class diagrams), the CIA triad |
+| Exercises | 10 fill-in-the-blank / classification exercises across all six weeks |
+| Quiz | 51 questions, 10 at a time, filterable by drawing from all six weeks |
+| Cheat sheet | Every table, formula and definition on one page |
 | Glossary | Every technical term on the site, one line each, searchable |
 
-### The six labs
+### The three interactive widgets
 
-1. **Sequential vs binary search** — step both algorithms on the same array and watch the comparison counters diverge.
-2. **How the orders grow** — plot O(1) through O(2ⁿ) on a linear or logarithmic axis.
-3. **Count the basic operations** — pick a loop nest, guess the count, check it against the exact simulation and the closed form. Includes Sample Test I Q3.
-4. **Find c and N** — slide `c` and `N` until `f(n) ≤ c·g(n)` holds, making the Big O definition visual.
-5. **Insertion sort pass by pass** — try reverse-sorted for the worst case and sorted for the best case.
-6. **Average case by experiment** — run 100,000 random searches and watch the mean settle onto `n(1 − p/2) + p/2`.
+1. **V-Model Explorer** — click each node of the V to see its pairing and whether it's verification or validation.
+2. **Scrum Sprint Cycle** — click through one full Sprint using the M-PAiSA bill-payments example.
+3. **UML Symbol Match** — match each symbol to its meaning.
 
-Your answers and progress are saved in the browser's local storage, so you can close the tab and
-come back. The **Reset** button in the top bar clears everything.
+Your answers and progress are saved in the browser's local storage, so you can
+close the tab and come back. The **Reset** button in the top bar clears
+everything.
 
 ## Deploying to GitHub Pages
 
@@ -76,78 +68,83 @@ js/widgets.js
 js/app.js
 ```
 
-The scripts must stay in that order in `index.html`: `data.js` and `glossary.js` and `primer.js`
-all define content that `app.js` reads at boot.
+The scripts must stay in that order in `index.html`: `data.js`, `glossary.js`
+and `primer.js` all define content that `app.js` reads at boot.
 
-To upload through the web interface: on the repo page choose **Add file → Upload files**, then drag
-the whole folder in. GitHub preserves the `css/` and `js/` subfolders. If drag-and-drop misses
-`.nojekyll` (some browsers hide dotfiles), create it manually with **Add file → Create new file**,
-name it `.nojekyll`, and leave it empty.
+To upload through the web interface: on the repo page choose **Add file →
+Upload files**, then drag the whole folder in. GitHub preserves the `css/`
+and `js/` subfolders. If drag-and-drop misses `.nojekyll` (some browsers
+hide dotfiles), create it manually with **Add file → Create new file**, name
+it `.nojekyll`, and leave it empty.
 
 3. Go to **Settings → Pages**.
-4. Under *Build and deployment*, set **Source** to `Deploy from a branch`, **Branch** to `main` and
-   folder to `/ (root)`. Save.
+4. Under *Build and deployment*, set **Source** to `Deploy from a branch`,
+**Branch** to `main` and folder to `/ (root)`. Save.
 5. Wait about a minute, then open `https://<your-username>.github.io/<repo-name>/`.
 
 ### Notes
 
-- All paths are relative, so the site works from a subdirectory — no configuration needed for a
-  project page.
-- Routing uses the URL hash (`#/bigo`), so there are no 404s on refresh and no rewrite rules needed.
-- `.nojekyll` tells Pages to serve the files as-is instead of running them through Jekyll.
-- No webfonts, no CDN, no external requests of any kind — you can open `index.html` straight from
-  your file system and everything works offline.
+- All paths are relative, so the site works from a subdirectory — no
+configuration needed for a project page.
+- Routing uses the URL hash (`#/w3`), so there are no 404s on refresh and no
+rewrite rules needed.
+- `.nojekyll` tells Pages to serve the files as-is instead of running them
+through Jekyll.
+- No webfonts, no CDN, no external requests of any kind — you can open
+`index.html` straight from your file system and everything works offline.
 
 ## Editing it
 
 Content lives in four files and needs no tooling:
 
-- `js/data.js` — every lesson page, as a list of blocks (`p`, `h`, `code`, `note`, `table`,
-  `formula`, `mcq`, `fill`, `reveal`, `order`, `pairs`, `widget`).
-- `js/primer.js` — the plain-English run-up shown above each page, plus any extra pages.
-  Two block types live only here: `plain` (the blue summary box) and `steps` (the numbered
-  ladder). Set `fold: true` on a page to have its `data.js` content folded in Guided mode.
+- `js/data.js` — every lesson page, as a list of blocks (`p`, `h`, `code`,
+`note`, `table`, `formula`, `mcq`, `fill`, `reveal`, `order`, `pairs`,
+`widget`).
+- `js/primer.js` — the plain-English run-up shown above each page, plus the
+Glossary page definition (in `EXTRA_SECTIONS`).
 - `js/glossary.js` — the tooltip and glossary terms.
-- `js/practice.js` — the quiz bank and the exercise set.
+- `js/practice.js` — the quiz bank, the exercise set, and the cheat sheet.
 
 To add a glossary term, append an object to `GLOSSARY`:
 
-```js
-{ w:'downcasting', alt:['downcast'], c:'java', see:'#/java-poly',
+```
+{ w:'least privilege', alt:['principle of least privilege'], c:'sec', see:'#/w6',
   d:'One-sentence definition. **bold** and `code` work.',
   ex:'Optional example line.' }
 ```
 
-`c` is the category (`java`, `ds`, `analysis`). `alt` lists other spellings that should also
-trigger the tooltip. Add `kw:true` for bare Java keywords like `this` or `final` — those only
-get a tooltip when they appear inside backticks, so the ordinary English words are left alone.
-Only the **first** mention of a term on a page is marked, capped at 30 per page.
+`c` is the category (`gen`, `proc`, `agile`, `req`, `design`, `sec`). `alt`
+lists other spellings that should also trigger the tooltip.
 
 To add a quiz question, append an object to `QUIZ_BANK`:
 
-```js
-{ topic:'Big O', q:'Your question?',
+```
+{ topic:'Week 6 · Security', q:'Your question?',
   opts:['A','B','C','D'], a:2, why:'Why C is right.' }
 ```
 
-To add a fill-in-the-blank exercise, use `{{0}}`, `{{1}}` … as the blanks and give an array of
-accepted answers for each:
+To add a fill-in-the-blank exercise, use `{{0}}`, `{{1}}` … as the blanks and
+give an array of accepted answers for each:
 
-```js
-{ t:'fill', id:'unique-id', title:'…', lang:'java',
+```
+{ t:'fill', id:'unique-id', title:'…', lang:'text',
   prompt:'…',
-  code:'class Dog {{0}} Animal { }',
-  answers:[['extends']],
+  code:'The {{0}} phase produces the SRS.',
+  answers:[['Requirements','requirements']],
   hint:'…', sol:'…' }
 ```
 
-Activity ids must be unique across the whole site — they are the keys used for progress tracking.
+Activity ids must be unique across the whole site — they are the keys used
+for progress tracking.
 
 To add a primer to a page, key it by the section id from `data.js`:
 
-```js
-'bigo': { fold:true, blocks:[
+```
+'w3': { fold:true, blocks:[
   { t:'plain', title:'In plain English', x:'…' },
-  { t:'steps', title:'Build it up', x:[ {h:'First rung', p:'…'}, {h:'Second rung', p:'…'} ] }
+  { t:'steps', title:'Build it up', x:[ {h:'First rung', p:'…'} ] }
 ]}
 ```
+
+To add a new widget, add a `mount(host)` function to `WIDGETS` in
+`js/widgets.js`, then reference it from a page with `{ t:'widget', w:'yourKey' }`.

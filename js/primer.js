@@ -1,7 +1,7 @@
 /* ============================================================
-   CS214 Revise — primers
-   A short, plain-language run-up that is shown ABOVE the lecture
-   content on each page, for when you are coming back to this cold.
+   CS160 Revise — primers
+   A short, plain-language run-up shown ABOVE the lecture content
+   on each page, for when you are coming back to this cold.
 
    PRIMERS[sectionId] = {
      fold:   true  -> in Guided mode the lecture content underneath is
@@ -12,8 +12,6 @@
    Two extra block types live here:
      { t:'plain',  title:'...', x:'...' }             a plain-English box
      { t:'steps',  title:'...', x:[{h:'',p:''}, ...]} a numbered ladder
-
-   EXTRA_SECTIONS are appended to SECTIONS at boot.
    ============================================================ */
 
 const PRIMERS = {
@@ -21,241 +19,123 @@ const PRIMERS = {
 /* ============================================================ */
 'start': { fold:false, blocks:[
   { t:'plain', title:'Read this bit first',
-    x:'If you have not touched this material in a while, do **not** start by reading everything. Start at the top of the list below and work down. Each page now opens with a plain-English version of the idea before the lecture wording arrives, and every technical word is clickable for a one-line definition.' },
+    x:'The test is tomorrow, so here is the fastest useful route through this site. Each week page opens with a plain-English summary before the lecture wording arrives, and every technical term is clickable for a one-line definition.' },
 
-  { t:'steps', title:'How the site works now', x:[
+  { t:'steps', title:'How the site works', x:[
     { h:'Dotted words are clickable',
-      p:'Any term with a dotted underline opens a short definition when you click or tap it — try casting, instantiate, or basic operation, three of the words most likely to have gone fuzzy. All of them are also listed on the <a href="#/glossary">Glossary</a> page.' },
+      p:'Any term with a dotted underline opens a short definition when you click or tap it. All of them are also listed on the <a href="#/glossary">Glossary</a> page.' },
     { h:'Guided mode keeps pages short',
-      p:'The button in the top bar switches between **Guided** and **Full**. In Guided mode the lecture material is folded into panels you open one at a time, so a page is a page and not a wall. In Full mode everything is open at once — better for a last-minute skim.' },
-    { h:'The blue box is the summary',
-      p:'Every lesson page starts with an "In plain English" box and a short ladder of steps. If you only read those, you still know what the page is about.' },
+      p:'The button in the top bar switches between **Guided** and **Full**. In Guided mode the lecture material is folded into panels you open one at a time. In Full mode everything is open — better for a last-minute skim.' },
     { h:'Do the activity under each section',
       p:'The activities are the actual revision. Reading feels like progress; answering is progress. Your answers are saved in this browser.' }
   ]},
 
-  { t:'steps', title:'A route through, if you are starting cold', x:[
-    { h:'1 · Get the vocabulary back',
-      p:'Skim the <a href="#/glossary">Glossary</a> for ten minutes. You do not need to memorise it — you need the words to stop being unfamiliar.' },
-    { h:'2 · Java first, because the exam code is written in it',
-      p:'Data structures & types \u2192 Inheritance \u2192 Polymorphism & casting \u2192 Abstract & interfaces \u2192 Object relationships. Guided mode, one panel at a time.' },
-    { h:'3 · Then the counting',
-      p:'Efficiency \u2192 T(n), W(n), B(n), A(n) \u2192 Big O \u2192 Insertion sort. This is roughly seven of the ten marks, so it gets the most time.' },
-    { h:'4 · Then stop reading and start answering',
-      p:'Labs \u2192 Code exercises \u2192 Quiz \u2192 Sample Test I. If a question catches you out, the explanation tells you which page to go back to.' },
-    { h:'5 · Night before',
-      p:'The Cheat sheet, and one more quiz set.' }
+  { t:'steps', title:'A route through, with under 24 hours', x:[
+    { h:'1 · Weeks 1–2 (foundations)',
+      p:'The profession & ethics, then the six SDLC phases. Everything later depends on knowing these six phases cold.' },
+    { h:'2 · Weeks 3–4 (process models)',
+      p:'Waterfall / Incremental / V-Model, then Agile / Scrum / XP. Learn the comparison tables — "which model fits this scenario" is a classic question style.' },
+    { h:'3 · Week 5 (requirements)',
+      p:'Elicitation techniques and functional vs. non-functional. The London Ambulance case and the FR/NFR classification exercise are both worth doing.' },
+    { h:'4 · Week 6 (design & security)',
+      p:'Cohesion/coupling, UML notation, and the CIA triad. The UML symbol tables come up constantly in this style of course.' },
+    { h:'5 · Then stop reading and start answering',
+      p:'Exercises \u2192 Quiz \u2192 Cheat sheet. If a question catches you out, go back to that week\u2019s page.' }
   ]}
 ]},
 
 /* ============================================================ */
-'ds-basics': { fold:true, blocks:[
+'w1': { fold:true, blocks:[
   { t:'plain', title:'In plain English',
-    x:'A data structure is just a decision about **how you keep your things**, and that decision fixes what is cheap and what is expensive later. Keeping books in a numbered shelf means you can grab number 40 instantly but inserting a new book at position 5 means shifting everything along. Keeping them in a chain where each book points at the next means inserting is trivial but finding number 40 means walking past thirty-nine books. There is no best structure — there is only the one that makes your most frequent operation cheap.' },
-
+    x:'Software is code + data + documentation, not just code. The industry needed "engineering" discipline because early, undisciplined projects kept failing badly (the "software crisis"). A software team splits into specialised roles because no one person can do requirements, design, coding, testing and management all well at once. And because software professionals are trusted with private systems no one else is watching closely, the profession leans on a written code of ethics — not just the law — to keep people honest.' },
   { t:'steps', title:'Build it up', x:[
-    { h:'Start with the array',
-      p:'A fixed run of slots, all the same type, side by side. Because slot 40 is a fixed distance from slot 0, reaching it takes one step regardless of size. Inserting or deleting in the middle is the expensive one.' },
-    { h:'Break the "side by side" rule and you get a linked list',
-      p:'Each item now carries the location of the next. Insert and delete become cheap — rewire two pointers. But direct access is gone: to reach the 40th you walk 39 links.' },
-    { h:'Restrict where you are allowed to add and remove',
-      p:'Allow both only at one end and you have a **stack** (last in, first out). Allow adding at one end and removing at the other and you have a **queue** (first in, first out). The restriction is the point: it makes the structure simple and fast.' },
-    { h:'Order by importance instead of arrival, and you need a heap',
-      p:'A **priority queue** hands out the most important item next. Built on a **heap** — a tree kept in a shape where the extreme value is always sitting at the top.' },
-    { h:'Skip searching entirely with a hash table',
-      p:'Calculate the slot from the key itself. No walking, no comparing — near-instant lookup, at the cost of a plan for when two keys land on the same slot.' }
-  ]},
-
-  { t:'note', k:'exam', title:'What the exam does with this',
-    x:'Question 1 of the sample test is a data structure choice worth 3 marks. It never asks "define a stack" — it describes a situation and asks which structure fits and **why**. So for each structure, hold on to one sentence: what it makes cheap, and what it makes expensive.' }
-]},
-
-/* ============================================================ */
-'java-inherit': { fold:true, blocks:[
-  { t:'plain', title:'In plain English',
-    x:'Inheritance is copy-paste that stays connected. You write `Animal` once with a name and an eat() method, then say `class Dog extends Animal` — and Dog has all of it without you retyping a line. Fix a bug in Animal and every subclass is fixed too. Everything else on this page is detail hanging off that one idea: how the subclass reaches back up to the parent (`super`), who is allowed to see what (the access levels), and the difference between adding a second version of a method (**overloading**) and replacing the inherited one (**overriding**).' },
-
-  { t:'steps', title:'Build it up', x:[
-    { h:'A class is a plan; an object is a thing built from it',
-      p:'`class Dog { }` is the plan. `new Dog()` builds one. That act is called **instantiating**, and the object produced is an **instance**.' },
-    { h:'extends draws the line',
-      p:'`class Dog extends Animal` means Dog is-a Animal. Dog gets Animal\u2019s fields and methods. Java allows only one parent per class.' },
-    { h:'Constructors chain upwards',
-      p:'Before a Dog can be built, the Animal inside it must be built. `super(...)` does that, and it has to be the very first statement in the constructor.' },
-    { h:'Access levels decide who can see it',
-      p:'Four settings, most open to most closed: `public`, `protected`, nothing at all (package-private), `private`. A subclass can see protected members; it cannot see private ones.' },
-    { h:'Two methods can share a name in two different ways',
-      p:'**Overloading** is same name, different parameters, in the same class — the compiler picks. **Overriding** is a subclass rewriting an inherited method with the identical signature — the running program picks, based on the real object.' }
-  ]},
-
-  { t:'note', k:'trap', title:'The one to get straight before you read on',
-    x:'Overload = different parameter list, decided at **compile** time. Override = identical signature in a subclass, decided at **run** time. Almost every trick question on this topic is testing whether you can tell those apart.' }
-]},
-
-/* ============================================================ */
-'java-poly': { fold:true, blocks:[
-  { t:'plain', title:'In plain English',
-    x:'You have a box labelled "Animal". You put a Dog in it. The label still says Animal — but the thing inside is still a Dog, and when you ask it to speak, it barks. That is the whole of polymorphism. **The label is what the compiler reads. The contents are what actually runs.** Casting is nothing more than changing the label: it never touches what is inside the box. Relabelling a Dog box as an Animal box is always fine, because a Dog really is an Animal. Relabelling an Animal box as a Dog box is a gamble, and if you are wrong the program finds out and crashes.' },
-
-  { t:'steps', title:'Build it up', x:[
-    { h:'Two types are in play at once',
-      p:'`Animal ref = new Dog();` has a **variable type** (Animal, on the left) and an **object type** (Dog, on the right). Nearly every question here is asking which of the two governs the answer.' },
-    { h:'The compiler checks the variable type',
-      p:'It only lets you call methods that Animal declares. `ref.fetch()` will not compile even though the object is genuinely a Dog — the label does not mention fetching.' },
-    { h:'The running program uses the object type',
-      p:'When you call `ref.speak()` and Dog has overridden speak(), the Dog version runs. That decision-at-the-last-moment is called **dynamic** (or late) **binding**.' },
-    { h:'Upcasting is safe, downcasting is a promise',
-      p:'Dog \u2192 Animal is **upcasting**: always true, so Java does it silently. Animal \u2192 Dog is **downcasting**: you have to write `(Dog)` yourself, and the run time will check whether you were telling the truth.' },
-    { h:'Check first with instanceof',
-      p:'`if (a instanceof Dog) { Dog d = (Dog) a; }` turns a possible crash into a question you asked politely.' },
-    { h:'Fields do not play this game',
-      p:'Only methods are chosen by the object type. A field with the same name in both classes is **shadowed**, and the variable type decides which one you get. This is the trap most people fall into.' }
-  ]},
-
-  { t:'note', k:'exam', title:'If you remember one line from this page',
-    x:'The compiler checks the **type of the variable**; the run time uses the **type of the object**. Methods override, fields shadow, and a cast changes only the label — never the object.' }
-]},
-
-/* ============================================================ */
-'java-abstract': { fold:true, blocks:[
-  { t:'plain', title:'In plain English',
-    x:'Sometimes a class exists only so other classes can inherit from it. "Animal" is like that — real animals exist, but a plain animal does not. Mark it **abstract** and Java stops anyone instantiating it, while still letting it hold shared code. Push that idea all the way and you get an **interface**: no shared code at all, just a list of methods a class promises to provide. Abstract class = a partly-built parent. Interface = a promise with nothing behind it. A class can have one parent, but it can make as many promises as it likes.' },
-
-  { t:'steps', title:'Build it up', x:[
-    { h:'Abstract class: cannot be instantiated',
-      p:'`abstract class Animal` can hold finished methods, fields and constructors — you simply cannot write `new Animal()`. It exists to be extended.' },
-    { h:'Abstract method: a signature with no body',
-      p:'`abstract void speak();` forces every concrete subclass to write its own. This is how a parent guarantees that all its children can do something without knowing how they do it.' },
-    { h:'Interface: all promise, no code',
-      p:'A list of method signatures and constants. `class Dog implements Comparable` obliges Dog to supply every method the interface names.' },
-    { h:'One parent, many interfaces',
-      p:'That is the practical reason interfaces exist. `extends` is limited to one; `implements` is not.' },
-    { h:'final is the opposite instruction',
-      p:'Where abstract says "you must finish this", final says "nobody may change this" — a constant variable, an unoverridable method, an unextendable class.' },
-    { h:'Two interfaces you are expected to know by name',
-      p:'**Comparable** gives your objects an ordering through `compareTo`, so sorting works. **Cloneable** permits copying with `clone()` — and raises the shallow-versus-deep question, because a plain clone copies references, leaving both copies pointing at the same inner objects.' }
+    { h:'Start with why "engineering" was needed',
+      p:'Before the 1968 NATO conference, software was mostly built ad-hoc, and it showed — projects ran over budget, over schedule, full of bugs. "Software engineering" borrowed discipline from older engineering fields.' },
+    { h:'Then the four layers',
+      p:'Quality focus (culture) → process (steps) → methods (how-to) → tools (automation). Each later week of the course fits into this stack somewhere.' },
+    { h:'Then the roles',
+      p:'Developer, Tester, Analyst, Project Manager are the four core roles — plus newer ones (DevOps, SRE, Data/ML, Security Engineer) as software moved to the cloud.' },
+    { h:'Then ethics',
+      p:'Law is the floor everyone must clear. Ethics is the personal standard above it. The ACM/IEEE Code has 8 areas; Boeing 737 MAX and Knight Capital are the two case studies worth knowing in detail.' }
   ]}
 ]},
 
 /* ============================================================ */
-'java-relations': { fold:true, blocks:[
+'w2': { fold:true, blocks:[
   { t:'plain', title:'In plain English',
-    x:'Classes are rarely alone. This page is about naming the ways they connect, and the names are almost entirely about **who dies when**. A house has rooms, and if the house is demolished the rooms go with it — the whole owns the part, which is **composition**. A department has lecturers, and closing the department does not delete the lecturers — the part outlives the whole, which is **aggregation**. If they just use each other without owning anything, it is a plain **association**. And is-a, the inheritance arrow, is **generalization**.' },
-
+    x:'The SDLC is just the ordered list of things every software project has to do: figure out what to build, plan how, build it, check it, ship it, keep it working. Every process model you\'ll meet in Weeks 3 and 4 is really just a different way of arranging these same six steps. The single most important fact in this whole course is that fixing a mistake gets dramatically more expensive the later you catch it — that is why so much emphasis goes on getting requirements and design right early.' },
   { t:'steps', title:'Build it up', x:[
-    { h:'Association — knows about',
-      p:'A plain line. Two independent classes, one uses the other. A Student uses a Library.' },
-    { h:'Aggregation — has-a, loosely',
-      p:'Hollow diamond at the owner\u2019s end. The part exists on its own and can be shared. Break the whole and the part survives.' },
-    { h:'Composition — has-a, strictly',
-      p:'Filled diamond. The part belongs to exactly one whole and is destroyed with it.' },
-    { h:'Generalization — is-a',
-      p:'Hollow triangle pointing at the superclass. This is inheritance drawn as a picture.' },
-    { h:'Multiplicity puts numbers on the line',
-      p:'`1`, `0..1`, `1..*`, `*`. Read them as "how many of this end take part in the relationship".' },
-    { h:'Singleton, the odd one out',
-      p:'Not a relationship but a pattern: a class that permits only one instance ever, through a private constructor and a static accessor.' }
-  ]},
-
-  { t:'note', k:'', title:'A memory hook for the diamonds',
-    x:'Hollow = hollow commitment = aggregation, the part can leave. Filled = filled-in, permanent = composition, the part cannot.' }
-]},
-
-/* ============================================================ */
-'eff-search': { fold:true, blocks:[
-  { t:'plain', title:'In plain English',
-    x:'Two algorithms can produce identical answers and still be worlds apart. Looking for a name in an unsorted list means checking every entry — a million names, up to a million checks. Looking in a **sorted** list lets you open the middle, throw away half, and repeat: a million names in about twenty checks. Nothing changed about the answer; everything changed about the work. The same lesson repeats with Fibonacci, where the recursive version recalculates the same values thousands of times and the loop version calculates each one once.' },
-
-  { t:'steps', title:'Build it up', x:[
-    { h:'Sequential search: check them one at a time',
-      p:'Works on any array, sorted or not. Best case you find it first try; worst case you check all n; the price of needing no order.' },
-    { h:'Binary search: halve the problem repeatedly',
-      p:'Requires a sorted array. Each comparison eliminates half of what is left, so the count grows like log\u2082 n — one extra comparison every time the array **doubles**.' },
-    { h:'Feel the size of that difference',
-      p:'n = 1,000,000. Sequential: up to 1,000,000 comparisons. Binary: 20. That gap is what the whole course is about.' },
-    { h:'Recursive Fibonacci is elegant and terrible',
-      p:'Each call spawns two more, and the same subproblems are computed again and again — the work grows exponentially.' },
-    { h:'Iterative Fibonacci does the obvious thing',
-      p:'One loop, keeping the last two values, n additions and done. Same answers, incomparably less work.' }
-  ]},
-
-  { t:'note', k:'exam', title:'Sample Test I asks this directly',
-    x:'Question 2 is iterative versus recursive. The mark is not for saying "recursive is slower" — it is for saying **why**: repeated recomputation of identical subproblems, against a single pass that computes each value once.' }
-]},
-
-/* ============================================================ */
-'complexity': { fold:true, blocks:[
-  { t:'plain', title:'In plain English',
-    x:'We refuse to measure algorithms in seconds, because seconds depend on your laptop, your language and your compiler — and none of those tell us anything about the algorithm. So instead we pick **one instruction** that dominates the work, count how many times it runs, and write that count as a formula in n. Sometimes the count is the same for every input of that size, and we call it T(n). Often it is not — a search can stop at the first item or grind to the last — and then we describe it three ways: the unluckiest input W(n), the luckiest B(n), and the typical one A(n).' },
-
-  { t:'steps', title:'The method, every single time', x:[
-    { h:'1 · Name the input size',
-      p:'Usually n, the number of items. Everything is expressed in terms of it.' },
-    { h:'2 · Pick the basic operation',
-      p:'The instruction that happens most and drives the total. In a search or sort it is nearly always the **comparison** — not the swap, because the swap only happens conditionally.' },
-    { h:'3 · Count how many times it runs',
-      p:'One loop over n items \u2192 n. A loop inside a loop where the inner one shrinks \u2192 (n\u22121)+(n\u22122)+\u2026+1 = n(n\u22121)/2. Three nested full loops \u2192 n\u00b3.' },
-    { h:'4 · Ask whether that count is the same for every input',
-      p:'If yes, you have an every-case complexity and you write T(n). If no, T(n) does not exist and you must give W(n), B(n) and A(n) instead.' },
-    { h:'5 · For A(n), state the probability assumption before computing',
-      p:'Average case is a weighted average, so it is meaningless until you say what the weights are — "the key is equally likely to be in any slot", or "the key is present with probability p".' }
-  ]},
-
-  { t:'note', k:'', title:'The two relationships worth memorising',
-    x:'B(n) \u2264 A(n) \u2264 W(n), always. And when T(n) exists, all four are equal: T(n) = B(n) = A(n) = W(n).' }
-]},
-
-/* ============================================================ */
-'bigo': { fold:true, blocks:[
-  { t:'plain', title:'In plain English',
-    x:'Once you have a count like 3n\u00b2 + 50n + 900, most of it is noise. For large n the n\u00b2 term swamps everything, and the 3 in front depends on hardware you were never trying to measure. Big O is the agreement to throw away both — the constants and the smaller terms — and keep only the shape of the curve. Saying an algorithm is O(n\u00b2) means: **beyond some point, it never grows faster than n\u00b2 does.** It is a ceiling, not an exact measurement.' },
-
-  { t:'steps', title:'Build it up', x:[
-    { h:'Drop the constant multipliers',
-      p:'3n\u00b2 and 100n\u00b2 are both O(n\u00b2). A constant factor is a faster machine, not a better algorithm.' },
-    { h:'Drop the lower-order terms',
-      p:'n\u00b2 + 50n + 900 is O(n\u00b2). At n = 1,000,000 the n\u00b2 term is a million times bigger than the n term; nothing else matters.' },
-    { h:'Learn the ladder in order',
-      p:'1 &lt; log n &lt; n &lt; n log n &lt; n\u00b2 &lt; n\u00b3 &lt; 2\u207f. Being able to place any expression on that ladder is most of what is asked.' },
-    { h:'Now the formal definition, which just says the same thing carefully',
-      p:'f(n) \u2208 O(g(n)) if there exist a constant **c** and a threshold **N** such that f(n) \u2264 c\u00b7g(n) for every n \u2265 N. The c absorbs the constant multipliers; the N gives permission for small inputs to misbehave.' },
-    { h:'Proving it means producing one c and one N that work',
-      p:'You are not asked for the best pair, just a pair. For n\u00b2 + 3n, taking c = 2 and N = 3 does it — beyond n = 3, 3n never exceeds n\u00b2.' }
-  ]},
-
-  { t:'note', k:'trap', title:'Where marks get lost',
-    x:'O is an **upper** bound, so n \u2208 O(n\u00b2) is a perfectly true statement — just a useless one. If a question asks for the order, give the tightest bound you can justify, not merely a correct one.' }
-]},
-
-/* ============================================================ */
-'insertion': { fold:true, blocks:[
-  { t:'plain', title:'In plain English',
-    x:'Insertion sort is how nearly everyone sorts a hand of cards. Everything to the left of where you are stands already sorted; you pick up the next card and slide it leftwards until it sits in the right place. If the hand arrives already sorted, every card stops immediately and you barely do any work. If it arrives backwards, every card has to travel the full width of the sorted part — and that is where n(n\u22121)/2 comes from.' },
-
-  { t:'steps', title:'Build it up', x:[
-    { h:'The invariant: the left part is always sorted',
-      p:'Start with just the first item, which is trivially sorted. Each pass grows the sorted region by one.' },
-    { h:'Best case is an already-sorted array',
-      p:'Every item is compared once against its left neighbour and stays put. n\u22121 comparisons, no shifts.' },
-    { h:'Worst case is a reverse-sorted array',
-      p:'Item i travels past all i\u22121 items before it. Total 1+2+\u2026+(n\u22121) = n(n\u22121)/2, so O(n\u00b2).' },
-    { h:'Average case sits halfway',
-      p:'On a random input each item travels roughly half the sorted region, giving about n(n\u22121)/4 \u2014 still quadratic.' },
-    { h:'Then the design lesson',
-      p:'The last part of this page is about choosing structures by cost profile: which operation is cheap to insert into, which is cheap to retrieve from, and which one your problem does more often.' }
+    { h:'Memorise the six phases in order',
+      p:'Requirements \u2192 Design \u2192 Implementation \u2192 Testing \u2192 Deployment \u2192 Maintenance. If you know this order cold, Weeks 3–4 are just "how does each model rearrange these?"' },
+    { h:'Then Boehm\u2019s cost-of-change curve',
+      p:'A mistake caught during Requirements: cheap (an hour on paper). The same mistake caught after deployment: 50–200x more expensive. This single idea explains half of why the course is structured the way it is.' },
+    { h:'Then verification vs. validation',
+      p:'Verification = "did we build it right, against the spec?" Validation = "did we build the right thing, against what the customer actually needed?" You can pass one and fail the other.' }
   ]}
 ]},
 
 /* ============================================================ */
-'lab': { fold:false, blocks:[
-  { t:'plain', title:'What these are for',
-    x:'These are the pages to use when a formula will not stick. Counting comparisons yourself, watching two searches diverge on the same array, or dragging c and N until the inequality holds tends to fix an idea in a way that re-reading the derivation does not. Nothing here needs setting up — press the buttons.' }
+'w3': { fold:true, blocks:[
+  { t:'plain', title:'In plain English',
+    x:'These are three different ways to run the six SDLC phases. Waterfall: do them once, strictly in order, no going back. Incremental: do a small version of all six phases for each piece of the system, then repeat for the next piece. V-Model: same as Waterfall, but every development phase gets a planned matching test phase from the very start. None of the three handle changing requirements well — that gap is exactly what Agile (next week) is built to fix.' },
+  { t:'steps', title:'Build it up', x:[
+    { h:'Waterfall first, because everything else is a variation on it',
+      p:'One pass, strict order, heavy documentation, no working software until near the end. Good for stable, well-understood, or heavily regulated projects.' },
+    { h:'Incremental relaxes the "whole system at once" part',
+      p:'Same six phases, but run in small slices, so working software appears early and often.' },
+    { h:'V-Model relaxes the "test at the end" part',
+      p:'Same shape as Waterfall, but bent into a V so every dev phase has a testing partner planned before coding starts. Left side = verification, right side = validation.' },
+    { h:'Then memorise the comparison table',
+      p:'Flexibility, when testing happens, when working software appears, and "best for" — this table format is exactly how a "which model fits this scenario" question gets asked.' }
+  ]}
 ]},
 
 /* ============================================================ */
-'sampletest': { fold:false, blocks:[
-  { t:'plain', title:'How to use this page',
-    x:'Do not read the answers first. Write yours in the box, then reveal — being wrong and finding out why is worth several times more than nodding along to a worked solution. Give yourself the real time limit on a first attempt.' }
+'w4': { fold:true, blocks:[
+  { t:'plain', title:'In plain English',
+    x:'Agile is what happens when a group of experienced developers got fed up with heavyweight, document-first processes and wrote down what they actually valued: people talking to each other, software that works, working with the customer instead of against them, and treating change as normal. Scrum is the most common way teams organise this (roles, meetings, short cycles called Sprints). XP is a set of very specific coding habits (like writing the test before the code) that keep quality high even as things change fast.' },
+  { t:'steps', title:'Build it up', x:[
+    { h:'The four values first',
+      p:'Individuals & interactions, working software, customer collaboration, responding to change — each "over" something else that still matters, just less when they conflict.' },
+    { h:'Scrum organises the team',
+      p:'3 roles (Product Owner, Scrum Master, Dev Team), 3 artifacts (Product Backlog, Sprint Backlog, Increment), 5 events (the Sprint itself, plus Planning, Daily Scrum, Review, Retrospective inside it).' },
+    { h:'XP tells you how to code',
+      p:'Pair programming, test-first (TDD), continuous integration, refactoring, simple design, collective ownership. Red-Green-Refactor is the loop these combine into.' },
+    { h:'Then the four-model comparison',
+      p:'Waterfall, Incremental, V-Model, Agile — same table as Week 3, one more column. Flexibility to change goes Low, Moderate, Low, High.' }
+  ]}
+]},
+
+/* ============================================================ */
+'w5': { fold:true, blocks:[
+  { t:'plain', title:'In plain English',
+    x:'Every process model starts with "Requirements" — this week is about how you actually do that well. You cannot just ask someone what they want and write it down; people are bad at describing solutions, different people want different things, and requirements shift as people see real progress. So requirements engineers combine techniques (interviews, questionnaires, watching people work) and end up writing two different kinds of statement: what the system must do (functional), and how well it must do it (non-functional).' },
+  { t:'steps', title:'Build it up', x:[
+    { h:'User requirements vs. system requirements',
+      p:'Same idea, two levels of detail — plain language for stakeholders, precise language for developers.' },
+    { h:'Three elicitation techniques, each with a clear trade-off',
+      p:'Interviews (deep but slow), questionnaires (fast but shallow), observation (reveals hidden habits but slow and people act differently when watched).' },
+    { h:'Functional vs. non-functional',
+      p:'"What must it do?" vs. "how well must it do it?" A system can do everything it\u2019s supposed to and still be unusable if it\u2019s too slow, insecure or unreliable.' },
+    { h:'The SRS ties it all together',
+      p:'One numbered document, following the shape set out by IEEE 830, that everyone on the project checks against for the rest of its life.' }
+  ]}
+]},
+
+/* ============================================================ */
+'w6': { fold:true, blocks:[
+  { t:'plain', title:'In plain English',
+    x:'Design is turning "what the system must do" into "how it will actually be built." Good design means each piece does one clear job (high cohesion) and pieces depend on each other as little as possible (low coupling). UML is just a shared drawing language so two engineers draw — and read — the same design the same way. And security has to be part of the design from day one, not bolted on afterwards, because the CIA triad (confidentiality, integrity, availability) is much cheaper to protect by design than to patch after a breach.' },
+  { t:'steps', title:'Build it up', x:[
+    { h:'Cohesion and coupling first — this is the exam-favourite pairing',
+      p:'High cohesion (one job per module), low coupling (modules don\u2019t depend on each other\u2019s internals). Aim for both.' },
+    { h:'Architectural styles',
+      p:'Layered (horizontal layers, each only talks to its neighbours), client-server, microservices.' },
+    { h:'UML — two diagram types this week',
+      p:'Use case diagrams show WHO uses the system and WHAT for. Class diagrams show WHAT the system is made of and how the pieces relate (association, aggregation, composition, generalization).' },
+    { h:'Then cybersecurity',
+      p:'CIA triad (confidentiality, integrity, availability), a handful of named threats you need to recognise (not carry out), and design principles like least privilege and input validation that defend against them.' }
+  ]}
 ]}
 
 };
