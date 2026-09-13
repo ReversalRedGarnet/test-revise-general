@@ -4,55 +4,19 @@
    is essay/theory-driven (named authors' claims, T/F + written
    explanation, compare-and-contrast), not definition/algorithm
    trivia, so the content shapes and activity types are different.
+   Relies on ../shared/engine.js (loaded first) for el/esc/md,
+   createStore, and the generic buildNav/route/paintProgress/
+   activity-shell mechanics shared with the other profile.
    ============================================================ */
 
-/* ---------- tiny DOM helper (same convention as the other profile) ---------- */
-function el(tag, attrs, kids){
-  const n = document.createElement(tag);
-  if (attrs) for (const k in attrs){
-    if (k === 'class') n.className = attrs[k];
-    else if (k === 'html') n.innerHTML = attrs[k];
-    else if (k === 'text') n.textContent = attrs[k];
-    else if (k.slice(0,2) === 'on') n.addEventListener(k.slice(2).toLowerCase(), attrs[k]);
-    else n.setAttribute(k, attrs[k]);
-  }
-  (kids || []).forEach(c => n.appendChild(typeof c === 'string' ? document.createTextNode(c) : c));
-  return n;
-}
-
 /* ---------- storage that never throws — namespaced to this profile ---------- */
-const Store = (function(){
-  let ok = true, mem = {};
-  try { localStorage.setItem('__t','1'); localStorage.removeItem('__t'); }
-  catch(e){ ok = false; }
-  return {
-    get(k, dflt){
-      try { const v = ok ? localStorage.getItem(k) : mem[k];
-            return v == null ? dflt : JSON.parse(v); }
-      catch(e){ return dflt; }
-    },
-    set(k, v){
-      try { const s = JSON.stringify(v); if (ok) localStorage.setItem(k, s); else mem[k] = s; }
-      catch(e){ /* private browsing — carry on */ }
-    },
-    clear(){
-      try { if (ok){ ['pl101.done','pl101.tf','pl101.essay'].forEach(k => localStorage.removeItem(k)); } mem = {}; }
-      catch(e){}
-    }
-  };
-})();
+const Store = createStore(['pl101.done','pl101.tf','pl101.essay']);
 
 let DONE  = Store.get('pl101.done', {});
 let TFANS = Store.get('pl101.tf', {});
 let ESSAY = Store.get('pl101.essay', {});
 
 function markDone(id){ if (!id || DONE[id]) return; DONE[id] = true; Store.set('pl101.done', DONE); paintProgress(); }
-function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function md(s){
-  return String(s)
-    .replace(/`([^`]+)`/g, (m,c) => '<code>' + esc(c) + '</code>')
-    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-}
 
 /* ============================================================
    Content census — every week's T/F items + scaffold prompts
@@ -71,26 +35,7 @@ const ALL_ACTIVITIES = (function(){
 })();
 
 function paintProgress(){
-  const total = ALL_ACTIVITIES.length;
-  const done  = ALL_ACTIVITIES.filter(id => DONE[id]).length;
-  const pct   = total ? Math.round(done/total*100) : 0;
-  const ring  = document.getElementById('ringFg');
-  if (ring){
-    const C = 2 * Math.PI * 15.5;
-    ring.style.strokeDasharray  = C;
-    ring.style.strokeDashoffset = C * (1 - pct/100);
-  }
-  const txt = document.getElementById('progressText');
-  if (txt) txt.textContent = pct + '%';
-  const pill = document.getElementById('progressPill');
-  if (pill) pill.title = done + ' of ' + total + ' activities completed';
-  document.querySelectorAll('#nav a').forEach(a => {
-    const href = a.getAttribute('href');
-    const w = (WEEKS || []).find(x => '#/' + x.id === href);
-    if (!w) return;
-    const ids = weekActivityIds(w);
-    a.classList.toggle('done', ids.length > 0 && ids.every(i => DONE[i]));
-  });
+  paintProgressCore(ALL_ACTIVITIES, id => !!DONE[id], WEEKS, weekActivityIds);
 }
 
 /* ============================================================
@@ -224,7 +169,7 @@ const SCAFFOLD_STEPS = [
   {title:'3 · Analyse / support / link', hint:'Why does this matter here? What supports it, or is an example of it? How does it connect back to the course material or the question asked?'}
 ];
 
-function renderScaffold(prompt, weekId){
+function renderScaffold(prompt){
   const uid = 'scaffold-' + prompt.id;
   const box = el('div', {class:'scaffold'});
   box.appendChild(el('div', {class:'scaffold-head'}, [prompt.title]));
@@ -234,7 +179,6 @@ function renderScaffold(prompt, weekId){
   body.appendChild(el('p', {html: md(prompt.q)}));
 
   const saved = ESSAY[uid] || {};
-  const areas = [];
   SCAFFOLD_STEPS.forEach((step, i) => {
     const wrap = el('div', {class:'scaffold-step'});
     wrap.appendChild(el('div', {class:'scaffold-step-label'}, [
@@ -248,7 +192,6 @@ function renderScaffold(prompt, weekId){
       const cur = ESSAY[uid] || {}; cur[i] = ta.value; ESSAY[uid] = cur; Store.set('pl101.essay', ESSAY);
     });
     wrap.appendChild(ta);
-    areas.push(ta);
     body.appendChild(wrap);
   });
 
@@ -268,13 +211,13 @@ function renderScaffold(prompt, weekId){
   body.appendChild(el('div', {class:'btnrow'}, [revealBtn]));
   body.appendChild(modelWrap);
 
-  if (Object.keys(saved).length && (typeof DONE !== 'undefined') && DONE[uid]){
+  if (Object.keys(saved).length && DONE[uid]){
     modelWrap.classList.add('show'); revealBtn.style.display = 'none';
   }
   return box;
 }
 
-R.scaffold = b => renderScaffold(b.prompt, b.weekId);
+R.scaffold = b => renderScaffold(b.prompt);
 
 /* ---------- compare & contrast tool (modernisation vs dependency) ---------- */
 R.comparecontrast = () => {
@@ -326,8 +269,8 @@ R.comparecontrast = () => {
     ]
   };
 
-  wrap.appendChild(renderScaffold(simPrompt, null));
-  wrap.appendChild(renderScaffold(diffPrompt, null));
+  wrap.appendChild(renderScaffold(simPrompt));
+  wrap.appendChild(renderScaffold(diffPrompt));
   return wrap;
 };
 
@@ -349,41 +292,19 @@ R.pastpaper = () => {
 
 /* ---------- activity chrome ---------- */
 function activityShell(title, id){
-  const state = el('span', {class:'activity-state', text:''});
-  const body  = el('div', {class:'activity-body'});
-  const box   = el('div', {class:'activity'}, [
-    el('div', {class:'activity-head'}, [
-      el('span', {class:'activity-kind', text:'Self-check'}),
-      el('span', {class:'activity-title', text:title}),
-      state
-    ]),
-    body
-  ]);
-  box._state = state;
+  const {box, body} = makeActivityShell('Self-check', title);
   if (id && DONE[id]) setState(box, 'done');
   return {box, body};
 }
 function setState(box, kind){
-  const s = box._state; if (!s) return;
   const label = {reviewed:'✓ reviewed', done:'✓ done'}[kind] || '';
-  s.textContent = label;
-  s.className = 'activity-state' + (kind === 'reviewed' || kind === 'done' ? ' ok' : '');
+  setActivityState(box, label, kind === 'reviewed' || kind === 'done');
 }
 
 /* ============================================================
    Page rendering + routing
    ============================================================ */
-function buildNav(){
-  const nav = document.getElementById('nav');
-  let group = null;
-  PAGES.forEach(s => {
-    if (s.group !== group){ group = s.group; nav.appendChild(el('div', {class:'nav-group', text:group})); }
-    nav.appendChild(el('a', {href:'#/' + s.id}, [
-      el('span', {text: s.nav || s.title}),
-      el('span', {class:'tick', text:'✓'})
-    ]));
-  });
-}
+function buildNav(){ buildNavList(PAGES); }
 
 function renderBlock(host, b){
   const fn = R[b.t];
@@ -471,7 +392,6 @@ function buildPastPaperSection(){
 }
 
 function buildHomeSection(){
-  const w1 = WEEKS[0];
   return {
     id:'start', group:'Start', nav:'How to use this',
     eyebrow: 'PL101 · Politics of Development',
@@ -496,19 +416,7 @@ function boot(){
   PAGES = [buildHomeSection()].concat(WEEKS.map(buildWeekSection), [buildEssaySection(), buildCompareSection(), buildPastPaperSection()]);
 }
 
-function route(){
-  const id = (location.hash || '#/start').replace('#/','');
-  const sec = PAGES.find(s => s.id === id);
-  if (!sec){
-    if (location.replace) location.replace('#/' + PAGES[0].id); else location.hash = '#/' + PAGES[0].id;
-    renderSection(PAGES[0]);
-    return;
-  }
-  renderSection(sec);
-  document.body.classList.remove('nav-open');
-  window.scrollTo(0,0);
-  document.getElementById('main').focus({preventScroll:true});
-}
+function route(){ routeTo(PAGES, renderSection); }
 
 document.addEventListener('DOMContentLoaded', () => {
   boot();
@@ -516,12 +424,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('hashchange', route);
   route();
 
-  const toggle = document.getElementById('navToggle');
-  toggle.addEventListener('click', () => {
-    const open = document.body.classList.toggle('nav-open');
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-  document.getElementById('scrim').addEventListener('click', () => document.body.classList.remove('nav-open'));
+  initChrome();
 
   document.getElementById('resetBtn').addEventListener('click', () => {
     if (!confirm('Clear every saved answer and tick for this profile? This cannot be undone.')) return;

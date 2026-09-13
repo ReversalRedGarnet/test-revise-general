@@ -1,5 +1,8 @@
 /* ============================================================
    CS160 Revise — router, renderer, activities, progress
+   Relies on ../shared/engine.js (loaded first) for el/esc/md,
+   createStore, and the generic buildNav/route/paintProgress/
+   activity-shell mechanics shared with the other profile.
    ============================================================ */
 
 /* ---------- pull in the extra pages defined in primer.js ---------- */
@@ -8,27 +11,8 @@ if (typeof EXTRA_SECTIONS !== 'undefined'){
 }
 const PRIMER_OF = (typeof PRIMERS !== 'undefined') ? PRIMERS : {};
 
-/* ---------- storage that never throws ---------- */
-const Store = (function(){
-  let ok = true, mem = {};
-  try { localStorage.setItem('__t','1'); localStorage.removeItem('__t'); }
-  catch(e){ ok = false; }
-  return {
-    get(k, dflt){
-      try { const v = ok ? localStorage.getItem(k) : mem[k];
-            return v == null ? dflt : JSON.parse(v); }
-      catch(e){ return dflt; }
-    },
-    set(k, v){
-      try { const s = JSON.stringify(v); if (ok) localStorage.setItem(k, s); else mem[k] = s; }
-      catch(e){ /* private browsing — carry on */ }
-    },
-    clear(){
-      try { if (ok){ ['cs160.done','cs160.answers','cs160.quiz'].forEach(k => localStorage.removeItem(k)); } mem = {}; }
-      catch(e){}
-    }
-  };
-})();
+/* ---------- storage that never throws (factory shared with the other profile) ---------- */
+const Store = createStore(['cs160.done','cs160.answers','cs160.quiz']);
 
 let DONE    = Store.get('cs160.done', {});
 let ANSWERS = Store.get('cs160.answers', {});
@@ -51,31 +35,7 @@ function activityIds(section){
 const ALL_ACTIVITIES = SECTIONS.reduce((a,s) => a.concat(activityIds(s)), []);
 
 function paintProgress(){
-  const total = ALL_ACTIVITIES.length;
-  const done  = ALL_ACTIVITIES.filter(id => DONE[id]).length;
-  const pct   = total ? Math.round(done/total*100) : 0;
-  const ring  = document.getElementById('ringFg');
-  const C = 2 * Math.PI * 15.5;
-  ring.style.strokeDasharray  = C;
-  ring.style.strokeDashoffset = C * (1 - pct/100);
-  document.getElementById('progressText').textContent = pct + '%';
-  document.getElementById('progressPill').title = done + ' of ' + total + ' activities completed';
-  document.querySelectorAll('#nav a').forEach(a => {
-    const sec = SECTIONS.find(s => '#/' + s.id === a.getAttribute('href'));
-    if (!sec) return;
-    const ids = activityIds(sec);
-    a.classList.toggle('done', ids.length > 0 && ids.every(i => DONE[i]));
-  });
-}
-
-/* ---------- text helpers ---------- */
-function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-/* inline markdown: **bold** and `code`; raw HTML in the source is allowed through */
-function md(s){
-  return String(s)
-    .replace(/`([^`]+)`/g, (m,c) => '<code>' + esc(c) + '</code>')
-    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  paintProgressCore(ALL_ACTIVITIES, id => !!DONE[id], SECTIONS, activityIds);
 }
 
 const JAVA_KW = new Set(('abstract assert boolean break byte case catch char class const continue default do double else enum ' +
@@ -123,138 +83,10 @@ function paintModeBtn(){
 }
 
 /* ============================================================
-   Glossary: first mention of a term on a page becomes a tooltip
+   The glossary tooltip subsystem (index, annotateGlossary, the
+   popover) lives in glossary-ui.js, loaded just after glossary.js
+   and before this file — annotateGlossary() below is defined there.
    ============================================================ */
-const GLOSS = (typeof GLOSSARY !== 'undefined') ? GLOSSARY : [];
-const GLOSS_BY_KEY = Object.create(null);
-let GLOSS_RE = null;
-
-function glossSlug(w){ return String(w).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
-
-(function buildGlossIndex(){
-  const keys = [];
-  GLOSS.forEach(e => {
-    e.slug = glossSlug(e.w);
-    [e.w].concat(e.alt || []).forEach(k => {
-      const lk = k.toLowerCase();
-      if (!GLOSS_BY_KEY[lk]){ GLOSS_BY_KEY[lk] = e; keys.push(k); }
-    });
-  });
-  if (!keys.length) return;
-  keys.sort((a,b) => b.length - a.length);           // longest first: "abstract class" beats "class"
-  const src = keys.map(k => k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|');
-  GLOSS_RE = new RegExp('(' + src + ')', 'gi');
-})();
-
-const GLOSS_SKIP = {PRE:1, A:1, BUTTON:1, SELECT:1, TEXTAREA:1, INPUT:1, SCRIPT:1, STYLE:1, H1:1, SUMMARY:1, LABEL:1, OPTION:1};
-function isWordChar(ch){ return !!ch && /[A-Za-z0-9_]/.test(ch); }
-
-const GLOSS_MAX_PER_PAGE = 30;
-function annotateGlossary(root){
-  if (!root || !GLOSS_RE) return;
-  const used = Object.create(null);
-  let placed = 0;
-  const texts = [];
-  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-    acceptNode(node){
-      if (!node.nodeValue || !/[A-Za-z]/.test(node.nodeValue)) return NodeFilter.FILTER_REJECT;
-      let p = node.parentNode;
-      while (p && p !== root){
-        if (GLOSS_SKIP[p.nodeName]) return NodeFilter.FILTER_REJECT;
-        if (p.classList && (p.classList.contains('no-gloss') || p.classList.contains('gterm'))) return NodeFilter.FILTER_REJECT;
-        p = p.parentNode;
-      }
-      return NodeFilter.FILTER_ACCEPT;
-    }
-  }, false);
-  let n; while ((n = walker.nextNode())) texts.push(n);
-
-  texts.forEach(node => {
-    if (placed >= GLOSS_MAX_PER_PAGE) return;
-    const inCode = node.parentNode && node.parentNode.nodeName === 'CODE';
-    const text = node.nodeValue;
-    GLOSS_RE.lastIndex = 0;
-    let m, last = 0, frag = null;
-    while ((m = GLOSS_RE.exec(text)) !== null){
-      const hit = m[0], start = m.index, end = start + hit.length;
-      const entry = GLOSS_BY_KEY[hit.toLowerCase()];
-      if (!entry || used[entry.slug]) continue;
-      if (entry.kw && !inCode) continue;        // bare Java keywords only inside `code`
-      if (placed >= GLOSS_MAX_PER_PAGE) break;
-      // require real word boundaries when the term begins/ends with a word character
-      if (isWordChar(hit[0]) && isWordChar(text[start-1])) continue;
-      if (isWordChar(hit[hit.length-1]) && isWordChar(text[end])) continue;
-      used[entry.slug] = true; placed++;
-      frag = frag || document.createDocumentFragment();
-      if (start > last) frag.appendChild(document.createTextNode(text.slice(last, start)));
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'gterm';
-      btn.textContent = hit;
-      btn.setAttribute('data-term', entry.slug);
-      btn.setAttribute('aria-label', hit + ' — show definition');
-      frag.appendChild(btn);
-      last = end;
-    }
-    if (frag){
-      if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
-      node.parentNode.replaceChild(frag, node);
-    }
-  });
-}
-
-/* ---------- the popover ---------- */
-let TIP = null, TIP_FOR = null;
-function tipEl(){
-  if (TIP) return TIP;
-  TIP = el('div', {class:'gtip', role:'dialog'});
-  TIP.addEventListener('click', e => e.stopPropagation());
-  document.body.appendChild(TIP);
-  return TIP;
-}
-function hideTip(){
-  if (TIP) TIP.classList.remove('show');
-  if (TIP_FOR) TIP_FOR.classList.remove('open');
-  TIP_FOR = null;
-}
-function showTip(btn){
-  const entry = GLOSS.find(e => e.slug === btn.getAttribute('data-term'));
-  if (!entry) return;
-  if (TIP_FOR === btn){ hideTip(); return; }
-  hideTip();
-  const t = tipEl();
-  t.innerHTML = '';
-  t.appendChild(el('div', {class:'gtip-word no-gloss', text: entry.w}));
-  t.appendChild(el('div', {class:'gtip-def no-gloss', html: md(entry.d)}));
-  if (entry.ex) t.appendChild(el('div', {class:'gtip-ex no-gloss', html: md(entry.ex)}));
-  const foot = el('div', {class:'gtip-foot'});
-  if (entry.see) foot.appendChild(el('a', {href: entry.see, text:'Where it is taught'}));
-  foot.appendChild(el('a', {href:'#/glossary', text:'All terms'}));
-  t.appendChild(foot);
-
-  t.classList.add('show');
-  TIP_FOR = btn; btn.classList.add('open');
-
-  const r = btn.getBoundingClientRect();
-  const w = Math.min(330, window.innerWidth - 20);
-  t.style.width = w + 'px';
-  let left = r.left + r.width/2 - w/2;
-  left = Math.max(10, Math.min(left, window.innerWidth - w - 10));
-  const h = t.offsetHeight;
-  let top = r.bottom + window.scrollY + 8;
-  if (r.bottom + h + 16 > window.innerHeight && r.top - h - 8 > 0) top = r.top + window.scrollY - h - 8;
-  t.style.left = left + 'px';
-  t.style.top  = top + 'px';
-}
-
-document.addEventListener('click', e => {
-  const btn = e.target.closest ? e.target.closest('.gterm') : null;
-  if (btn){ e.preventDefault(); e.stopPropagation(); showTip(btn); return; }
-  hideTip();
-});
-document.addEventListener('keydown', e => { if (e.key === 'Escape') hideTip(); });
-window.addEventListener('resize', hideTip);
-window.addEventListener('hashchange', hideTip);
 
 /* ============================================================
    Block renderers
@@ -621,25 +453,13 @@ R.pairs = b => {
 
 /* ---------- activity chrome ---------- */
 function activityShell(title, id){
-  const state = el('span', {class:'activity-state', text:''});
-  const body  = el('div', {class:'activity-body'});
-  const box   = el('div', {class:'activity'}, [
-    el('div', {class:'activity-head'}, [
-      el('span', {class:'activity-kind', text:'Activity'}),
-      el('span', {class:'activity-title', text:title}),
-      state
-    ]),
-    body
-  ]);
-  box._state = state;
+  const {box, body} = makeActivityShell('Activity', title);
   if (id && DONE[id]) setState(box, 'done');
   return {box, body};
 }
 function setState(box, kind){
-  const s = box._state; if (!s) return;
-  const label = {correct:'✓ correct', answered:'answered', reviewed:'✓ reviewed', done:'✓ done'}[kind] || '';
-  s.textContent = label;
-  s.className = 'activity-state' + (kind === 'correct' || kind === 'reviewed' || kind === 'done' ? ' ok' : '');
+  const map = {correct:'✓ correct', answered:'answered', reviewed:'✓ reviewed', done:'✓ done'};
+  setActivityState(box, map[kind] || '', kind === 'correct' || kind === 'reviewed' || kind === 'done');
 }
 
 /* ============================================================
@@ -743,20 +563,7 @@ R.quiz = () => {
 /* ============================================================
    Page rendering + routing
    ============================================================ */
-function buildNav(){
-  const nav = document.getElementById('nav');
-  let group = null;
-  SECTIONS.forEach(s => {
-    if (s.group !== group){
-      group = s.group;
-      nav.appendChild(el('div', {class:'nav-group', text:group}));
-    }
-    nav.appendChild(el('a', {href:'#/' + s.id}, [
-      el('span', {text: s.nav || s.title}),
-      el('span', {class:'tick', text:'✓'})
-    ]));
-  });
-}
+function buildNav(){ buildNavList(SECTIONS); }
 
 function renderBlock(host, b){
   const fn = R[b.t];
@@ -853,20 +660,7 @@ function renderSection(sec){
   paintProgress();
 }
 
-function route(){
-  const id = (location.hash || '#/start').replace('#/','');
-  const sec = SECTIONS.find(s => s.id === id);
-  if (!sec){                                    // unknown hash — normalise the URL
-    if (location.replace) location.replace('#/' + SECTIONS[0].id);
-    else location.hash = '#/' + SECTIONS[0].id;
-    renderSection(SECTIONS[0]);
-    return;
-  }
-  renderSection(sec);
-  document.body.classList.remove('nav-open');
-  window.scrollTo(0,0);
-  document.getElementById('main').focus({preventScroll:true});
-}
+function route(){ routeTo(SECTIONS, renderSection); }
 
 /* ---------- boot ---------- */
 document.addEventListener('DOMContentLoaded', () => {
@@ -878,12 +672,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const modeBtn = document.getElementById('modeBtn');
   if (modeBtn) modeBtn.addEventListener('click', () => setMode(MODE === 'guided' ? 'full' : 'guided'));
 
-  const toggle = document.getElementById('navToggle');
-  toggle.addEventListener('click', () => {
-    const open = document.body.classList.toggle('nav-open');
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-  document.getElementById('scrim').addEventListener('click', () => document.body.classList.remove('nav-open'));
+  initChrome();
 
   document.getElementById('resetBtn').addEventListener('click', () => {
     if (!confirm('Clear every saved answer, score and tick? This cannot be undone.')) return;
