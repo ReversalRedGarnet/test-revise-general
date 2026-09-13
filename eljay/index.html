@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PL101 Revise — Politics of Development</title>
+<meta name="description" content="Interactive revision for PL101: poverty & inequality, colonialism, independence, modernisation, foreign aid, and critical approaches to development. Weeks 1-7, built around the MST's True/False-plus-explanation and compare-and-contrast format.">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%233a4a2f'/><text x='16' y='23' font-size='14' font-family='monospace' font-weight='700' fill='%23dbe6ce' text-anchor='middle'>PL</text></svg>">
+</head>
+<body>
+
+<header class="topbar">
+  <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <a class="brand" href="#/start">
+    <span class="brand-mark">PL</span>
+    <span class="brand-text">PL101 Revise</span>
+  </a>
+  <div class="topbar-right">
+    <div class="progress-pill" id="progressPill" title="Activities completed">
+      <svg viewBox="0 0 36 36" class="ring" aria-hidden="true">
+        <circle cx="18" cy="18" r="15.5" class="ring-bg"></circle>
+        <circle cx="18" cy="18" r="15.5" class="ring-fg" id="ringFg"></circle>
+      </svg>
+      <span id="progressText">0%</span>
+    </div>
+    <button class="btn-ghost" id="resetBtn" title="Clear all saved answers and progress">Reset</button>
+    <a class="btn-ghost" href="../index.html" title="Back to profile select">Switch profile</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav id="nav" aria-label="Topics"></nav>
+    <div class="sidebar-foot">
+      <p>Built from the Week 1&ndash;7 lectures and readings, and the MST format (Weeks 1&ndash;7).</p>
+    </div>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <main id="main" tabindex="-1">
+    <article id="page"></article>
+    <nav class="pager" id="pager" aria-label="Page navigation"></nav>
+  </main>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

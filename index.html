@@ -3,54 +3,77 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CS160 Revise — Introduction to Software Engineering</title>
-<meta name="description" content="Interactive revision for CS160: the software engineering profession, the SDLC, process models, Agile, requirements engineering, and design & security basics. Weeks 1-6.">
-<link rel="stylesheet" href="css/style.css">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%231d4e6f'/><text x='16' y='23' font-size='15' font-family='monospace' font-weight='700' fill='%238fd0f5' text-anchor='middle'>SE</text></svg>">
+<title>Revise</title>
+<meta name="description" content="Pick a profile to start revising.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%231d4e6f'/><text x='16' y='23' font-size='14' font-family='monospace' font-weight='700' fill='%238fd0f5' text-anchor='middle'>R</text></svg>">
+<style>
+  :root{
+    --navy: #1d4e6f;
+    --navy-dark: #16405c;
+    --blue: #2f7fbf;
+    --blue-dark: #23608f;
+    --blue-pale: #e8f1f8;
+    --paper: #ffffff;
+    --page: #f4f8fb;
+    --line: #cfdde8;
+    --text: #22333f;
+    --muted: #5f7787;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; min-height:100vh; font-family:var(--sans); color:var(--text); background:var(--page);
+    display:flex; align-items:center; justify-content:center; padding:40px 16px;
+  }
+  .wrap{ max-width:640px; width:100%; }
+  .kicker{
+    font-size:12px; letter-spacing:.08em; text-transform:uppercase; font-weight:700;
+    color:var(--blue-dark); text-align:center; margin:0 0 8px;
+  }
+  h1{ font-size:28px; text-align:center; margin:0 0 8px; font-weight:700; color:var(--navy); }
+  .sub{ text-align:center; color:var(--muted); font-size:15px; margin:0 0 34px; line-height:1.55; }
+  .profiles{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:16px; }
+  .profile{
+    display:block; text-decoration:none; color:var(--text);
+    background:var(--paper); border:1px solid var(--line); border-radius:6px;
+    padding:24px 22px; transition:border-color .15s, transform .1s;
+  }
+  .profile:hover{ border-color:var(--blue); }
+  .profile:active{ transform:scale(.99); }
+  .avatar{
+    width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:17px; color:#fff; background:var(--navy); margin-bottom:14px;
+  }
+  .profile.eljay .avatar{ background:#5a6f2f; }
+  .profile h2{ font-size:18px; margin:0 0 5px; font-weight:700; }
+  .profile p{ margin:0; font-size:13.5px; color:var(--muted); line-height:1.5; }
+  .profile .tag{
+    display:inline-block; margin-top:12px; font-size:11px; letter-spacing:.05em; text-transform:uppercase;
+    font-weight:700; color:var(--blue-dark); background:var(--blue-pale); border-radius:3px; padding:3px 7px;
+  }
+  footer{ text-align:center; margin-top:30px; font-size:12.5px; color:var(--muted); }
+</style>
 </head>
 <body>
-
-<header class="topbar">
-  <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
-  <a class="brand" href="#/start">
-    <span class="brand-mark">SE</span>
-    <span class="brand-text">CS160 Revise</span>
-  </a>
-  <div class="topbar-right">
-    <div class="progress-pill" id="progressPill" title="Activities completed">
-      <svg viewBox="0 0 36 36" class="ring" aria-hidden="true">
-        <circle cx="18" cy="18" r="15.5" class="ring-bg"></circle>
-        <circle cx="18" cy="18" r="15.5" class="ring-fg" id="ringFg"></circle>
-      </svg>
-      <span id="progressText">0%</span>
-    </div>
-    <button class="btn-ghost mode-btn" id="modeBtn" aria-pressed="true" title="Switch between guided and full reading">Guided</button>
-    <button class="btn-ghost" id="resetBtn" title="Clear all saved answers and progress">Reset</button>
+<div class="wrap">
+  <p class="kicker">Revision</p>
+  <h1>Who's revising?</h1>
+  <p class="sub">Each profile is a separate course with its own material and its own saved progress. Picking one doesn't touch the other.</p>
+  <div class="profiles">
+    <a class="profile ayga" href="ayga/index.html">
+      <div class="avatar">A</div>
+      <h2>Ayga</h2>
+      <p>CS160 — Introduction to Software Engineering. Weeks 1&ndash;6: the profession & ethics, the SDLC, process models, Agile, requirements, design & security.</p>
+      <span class="tag">Algorithms &amp; process</span>
+    </a>
+    <a class="profile eljay" href="eljay/index.html">
+      <div class="avatar">E</div>
+      <h2>Eljay</h2>
+      <p>PL101 — Politics of Development. Weeks 1&ndash;7: poverty & inequality, colonialism, independence, modernisation, aid, and critical approaches.</p>
+      <span class="tag">Theory &amp; essay practice</span>
+    </a>
   </div>
-</header>
-
-<div class="shell">
-  <aside class="sidebar" id="sidebar">
-    <nav id="nav" aria-label="Topics"></nav>
-    <div class="sidebar-foot">
-      <p>Built from the Week 1&ndash;6 lecture notes, tutorials, and the MST coverage (Weeks 1&ndash;6).</p>
-    </div>
-  </aside>
-  <div class="scrim" id="scrim"></div>
-
-  <main id="main" tabindex="-1">
-    <article id="page"></article>
-    <nav class="pager" id="pager" aria-label="Page navigation"></nav>
-  </main>
+  <footer>Static site, no accounts &mdash; progress is saved per profile in this browser only.</footer>
 </div>
-
-<script src="js/data.js"></script>
-<script src="js/glossary.js"></script>
-<script src="js/primer.js"></script>
-<script src="js/practice.js"></script>
-<script src="js/widgets.js"></script>
-<script src="js/app.js"></script>
 </body>
 </html>
