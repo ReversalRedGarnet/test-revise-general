@@ -3,8 +3,7 @@
    (4 questions, 15 marks). Written for this site, not from the
    course. Run by the paper engine in mock.js.
 
-   Designed to have ONE right answer each (checked with the engines,
-   see the Stage 4 notes):
+   Designed to have ONE right answer each (checked with the engines):
      A Q1  Huffman: no equal weights at any merge → unique tree + codes
      A Q4  Dijkstra: no tie when circling, no equal-length alternative path
      B Q1  Huffman reverse: the question STATES the convention (smaller

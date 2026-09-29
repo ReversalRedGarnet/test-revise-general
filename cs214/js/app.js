@@ -1,8 +1,8 @@
 /* ============================================================
    CS214 Revise — router, block renderers, activities, progress
    Relies on ../shared/engine.js (el/esc/md, createStore, buildNavList,
-   routeTo, paintProgressCore, makeActivityShell, initChrome), then
-   glossary*.js, graph.js, dijkstra.js and data.js.
+   routeTo, paintProgressCore, makeActivityShell, initChrome) and on
+   every other cs214/js file; it loads last (see index.html).
    ============================================================ */
 
 /* ---------- storage, namespaced to this profile (wrapped: never throws) ---------- */

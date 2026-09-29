@@ -1,7 +1,7 @@
 /* ============================================================
    CS214 Revise — Kruskal and Prim (Lec 9.1): step engines and the
-   static step tables used by the lesson pages. Stage 4 builds the
-   visualisers on top of these.
+   static step tables used by the lesson pages. mstviz.js builds the
+   interactive activities on top of these.
 
    Ties: the course states no tie rule. Here:
      Kruskal — edges of equal weight are taken in the order the graph

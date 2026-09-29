@@ -10,7 +10,7 @@
    on the LEFT (bit 0). That is the default here ("smaller on the
    left"); a "larger on the left" option exists for comparison.
 
-   Ties: the course never states a rule. Two rules are offered and
+   Ties: the course states no tie rule. Two rules are offered and
    named everywhere they matter:
      'old' — among equal frequencies the node that has been in the
              queue longest comes out first (original symbols in table

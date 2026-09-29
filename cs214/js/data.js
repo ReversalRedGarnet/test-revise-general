@@ -4,7 +4,6 @@
    Block types are rendered by app.js (see R.*). Blocks with an `id`
    (mcq, quiz, widget) count toward progress.
    Source tags: lecture / lab / past / extra / textbook / noncourse.
-   Stage 1 = start, graph basics, SSSP + Dijkstra, glossary.
    ============================================================ */
 
 const TEST_INFO = {
