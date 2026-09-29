@@ -5,7 +5,6 @@
 
 :root{
   --navy:       #1d4e6f;
-  --navy-dark:  #16405c;
   --blue:       #2f7fbf;
   --blue-dark:  #23608f;
   --blue-pale:  #e8f1f8;
@@ -145,7 +144,6 @@ code{
   font-family: var(--mono); font-size:.88em; background:#eef4f9; color:#1a4a6b;
   padding: 1px 4px; border-radius:3px; border:1px solid #dbe7f0;
 }
-hr{ border:0; border-top:1px solid var(--line); margin: 28px 0; }
 
 /* ---------- code blocks ---------- */
 .codebox{ margin: 0 0 18px; border-radius: var(--r); overflow:hidden; border:1px solid var(--code-line); }
@@ -154,16 +152,10 @@ hr{ border:0; border-top:1px solid var(--line); margin: 28px 0; }
   padding: 6px 13px; border-bottom:1px solid var(--code-line); display:flex; align-items:center; gap:10px;
 }
 .codebox-head .tag{ color:#7593a8; letter-spacing:.06em; text-transform:uppercase; font-size:10.5px; font-weight:700; }
-.codebox pre, pre.plaincode{
+.codebox pre{
   margin:0; background: var(--code-bg); color:#20404f; padding: 13px 15px;
   overflow-x:auto; font-family: var(--mono); font-size:13.5px; line-height:1.6;
 }
-pre.plaincode{ border:1px solid var(--code-line); border-radius: var(--r); }
-pre .k{ color:#0a5c9e; font-weight:600; }   /* keyword */
-pre .s{ color:#9a3412; }                    /* string */
-pre .c{ color:#728ea1; font-style:italic; } /* comment */
-pre .n{ color:#8a3ea8; }                    /* number */
-pre .t{ color:#0f6f66; }                    /* type */
 
 /* ---------- callouts ---------- */
 .note{
@@ -257,43 +249,7 @@ textarea.scratch{
   border:1px solid var(--line); border-radius:var(--r); resize:vertical; background:#fff; color:var(--text);
 }
 
-/* ---------- widgets ---------- */
-.stat{
-  font-family:var(--mono); font-size:13px; background: var(--blue-pale); border:1px solid var(--line);
-  padding: 3px 9px; border-radius:3px; color:#1e5175;
-}
-.stat b{ color:#123a54; }
-
-/* ordering */
-.order-list{ list-style:none; padding:0; margin:0 0 6px; }
-.order-list li{
-  display:flex; align-items:center; gap:12px; background:#fff; border:1px solid var(--line);
-  border-radius:var(--r); padding:8px 12px; margin-bottom:6px; font-family:var(--mono); font-size:14px;
-}
-.order-list li.ok{ border-color: var(--green); background: var(--green-bg); }
-.order-list li.no{ border-color: var(--red); background: var(--red-bg); }
-.order-btns{ margin-left:auto; display:flex; gap:5px; }
-.order-btns button{
-  width:27px; height:25px; border:1px solid var(--line); background:#f2f7fb; border-radius:3px;
-  cursor:pointer; font-size:12px; line-height:1; color:#3a566a;
-}
-.order-btns button:hover{ background: var(--blue-pale2); }
-
-/* classify rows */
-.pair-row{
-  display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
-  border-bottom:1px solid var(--line-2); padding:8px 6px; margin:0;
-}
-.pair-row select{
-  font-size:13.5px; padding:4px 7px; border:1px solid var(--line); border-radius:3px; background:#fff; color:var(--text);
-}
-.pair-row .pair-text{ flex:1; min-width:180px; }
-.pair-row.ok{ background: var(--green-bg); }
-.pair-row.no{ background: var(--red-bg); }
-
 /* quiz */
-.quiz-meta{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:18px; }
-.quiz-meta select{ font-size:13.5px; padding:4px 7px; border:1px solid var(--line); border-radius:3px; background:#fff; color:var(--text); }
 .scorecard{ border:1px solid var(--line); border-radius:var(--r); padding:18px; background:#f7fbfd; margin-bottom:20px; }
 .scorecard .big{ font-family:var(--mono); font-size:38px; font-weight:700; color:var(--blue-dark); line-height:1; }
 .bar{ height:8px; background:#e2ebf2; border-radius:4px; overflow:hidden; margin:12px 0; }
@@ -329,14 +285,13 @@ textarea.scratch{
 
 /* ---------- print (for the cheat sheet) ---------- */
 @media print{
-  .topbar, .sidebar, .pager, .scrim, .btnrow, .order-btns{ display:none !important; }
+  .topbar, .sidebar, .pager, .scrim, .btnrow{ display:none !important; }
   .shell{ padding-top:0; }
   main{ margin-left:0; padding:0; }
   article{ border:0; max-width:none; padding:0; }
   body{ background:#fff; font-size:11pt; }
   .activity, .note, .codebox, table, .formula{ break-inside: avoid; }
   a{ color:inherit; text-decoration:none; }
-  canvas{ display:none; }
 }
 
 /* ---------- responsive ---------- */
@@ -403,13 +358,6 @@ ol.ladder > li > strong{ display:block; color: var(--navy); margin-bottom:2px; }
 ol.ladder > li > div{ color: var(--text); }
 
 /* ---------- folding panels ---------- */
-.foldbar{
-  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
-  margin: 22px 0 10px; padding-top: 16px;
-  border-top: 1px solid var(--line-2);
-}
-.foldbar-note{ font-size:13px; color: var(--muted); }
-
 details.fold{
   border: 1px solid var(--line);
   border-radius: var(--r);
@@ -439,8 +387,6 @@ details.fold[open] > summary{ border-bottom:1px solid var(--line-2); border-radi
 }
 .fold-body{ padding: 14px 16px 4px; }
 .fold-body > h2:first-child, .fold-body > h3:first-child{ margin-top:0; }
-
-.mode-btn{ min-width: 62px; }
 
 /* ---------- glossary terms in the text ---------- */
 button.gterm{
@@ -507,7 +453,6 @@ button.gtab.on{ background: var(--navy); border-color: var(--navy); color:#fff; 
 .muted{ color: var(--muted); }
 
 @media (max-width: 900px){
-  .mode-btn{ min-width:0; }
   .gtip{ font-size:14.5px; }
 }
 
