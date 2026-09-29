@@ -34,7 +34,7 @@ function mstConnected(g){ return kruskalSteps(g).F.length === g.nodes.length - 1
 function mstNote(g){
   const tag = g.tag || 'extra';
   return el('p', {class:'src'}, [el('span', {class:'badge ' + tag, text: PRESET_TAG_LABEL[tag] || 'Extra practice'}),
-    document.createTextNode((g.note || '') + (g.directed ? ' (Directed on its source slide — read as undirected here.)' : ''))]);
+    document.createTextNode(g.note || '')]);
 }
 function eStr(u, v, w){ return '(' + u + ', ' + v + ')' + (w != null ? ' ' + w : ''); }
 function sortedEdges(g){ return undirectedEdges(g).sort((a, b) => a.w - b.w || a.i - b.i); }
@@ -72,7 +72,6 @@ function mstGraphUI(startKey, onGraph){
   }
   function set(ng){
     g = ng;
-    if (g.directed){ g.directed = false; }
     editText.value = graphToText(g);
     editErr.textContent = '';
     noteHost.innerHTML = ''; noteHost.appendChild(mstNote(g));

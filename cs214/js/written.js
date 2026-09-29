@@ -32,7 +32,6 @@ function writtenTicked(item, state, i){
   if (c.auto) return writtenChoiceRight(item, state.choice);
   return !!(state.ticks && state.ticks[i]);
 }
-function writtenMarked(item, state){ return !!(state && state.revealed); }
 
 function renderWritten(item, state, save, mode, onRevealed){
   state = state || {};

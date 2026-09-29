@@ -123,12 +123,6 @@ class Huff {
   leaves(){ return this.leafIds.map(i => this.nodes[i]); }
 }
 
-function huffFromSet(key, opts, useScript){
-  const set = HUFF_SETS[key];
-  const h = new Huff(set.symbols, opts);
-  if (useScript && set.script) h.runScript(set.script); else h.runAll();
-  return h;
-}
 function countText(text, ignoreSpaces){
   const out = [], idx = {};
   String(text).toUpperCase().split('').forEach(ch => {
