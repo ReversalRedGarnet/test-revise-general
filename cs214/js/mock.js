@@ -472,7 +472,6 @@ function gradeHuffReverse(q, ans){
     '<li><b>Range (' + rangeMarks + ' / 2):</b> ' + rangeNote + convNote + '</li></ul>';
   return {marks: treeMarks + rangeMarks, treeMarks, rangeMarks, html};
 }
-function gradeQ1(ans){ return gradeHuffReverse(MOCK_QS[0], ans); }
 
 function gradeHuffBuild(q, ans){
   const h = new Huff(q.symbols).runAll(), codes = h.codes(), s = huffSizes(h);
@@ -538,7 +537,6 @@ function gradeDijkstra(q, ans){
     '<li><b>Paths (' + (pathOkAll ? 1 : 0) + ' / 1):</b> ' + (pathOkAll ? '✔ all right.' : '✘ should be ' + others.map(v => full.pathTo(v).join('→')).join(', ') + '.') + '</li></ul>';
   return {marks, tableMarks, distOk, pathOkAll, rowsRight, html};
 }
-function gradeQ4(ans){ return gradeDijkstra(MOCK_QS[3], ans); }
 
 /* Kruskal trace: each filled row must be a lightest not-yet-considered edge (ties in any
    order) with the right decision; rows after the tree is finished are ignored */
@@ -602,4 +600,3 @@ function paperScore(P, a){
   });
   return out;
 }
-function attemptScore(a){ return paperScore(PAPERS.p2025, a); }
