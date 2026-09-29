@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CS214 Test 2 revision sheet</title>
+<meta name="description" content="One-page printable revision sheet for CS214 Test 2: design approaches, greedy steps, Kruskal, Prim, Dijkstra, Huffman, traps and assumptions.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%231d4e6f'/><text x='16' y='21' font-size='10' font-family='monospace' font-weight='700' fill='%238fd0f5' text-anchor='middle'>214</text></svg>">
+<style>
+:root{
+  --navy:#1d4e6f; --blue:#2f7fbf; --pale:#eaf4fb; --line:#cfdde8; --text:#1c2b36; --muted:#5b6f7e;
+  --red:#a92b3c; --red-bg:#fceced; --amber:#8a5a00; --amber-bg:#fff6e0;
+  --sans: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, Consolas, "Courier New", monospace;
+}
+*{ box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; }
+body{ margin:0; background:#f4f8fb; color:var(--text); font: 14px/1.45 var(--sans); }
+.bar{ max-width:1100px; margin:0 auto; padding:12px 16px 0; display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+.bar a, .bar button{ font: 600 13.5px var(--sans); color:var(--navy); background:#fff; border:1px solid var(--line); border-radius:4px; padding:6px 12px; text-decoration:none; cursor:pointer; }
+.bar .hint{ color:var(--muted); font-size:13px; }
+.sheet{ max-width:1100px; margin:10px auto 30px; background:#fff; border:1px solid var(--line); border-radius:6px; padding:16px 18px; }
+header{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px 16px; align-items:baseline; border-bottom:2px solid var(--navy); padding-bottom:4px; margin-bottom:8px; }
+h1{ margin:0; font-size:19px; color:var(--navy); }
+header p{ margin:0; color:var(--muted); font-size:12.5px; }
+.cols{ column-count:2; column-gap:18px; }
+section{ break-inside:avoid; margin:0 0 9px; }
+h2{ margin:0 0 3px; font-size:13.5px; color:#fff; background:var(--navy); padding:2px 7px; border-radius:3px; }
+p{ margin:0 0 4px; }
+ul{ margin:0 0 4px; padding-left:17px; } li{ margin:0 0 1px; }
+table{ border-collapse:collapse; width:100%; margin:2px 0 4px; font-size:12.5px; }
+th, td{ border:1px solid var(--line); padding:2px 5px; text-align:left; vertical-align:top; }
+th{ background:var(--pale); }
+.alg{ border-left:3px solid var(--blue); padding:1px 0 1px 7px; margin:0 0 6px; }
+.alg b.name{ color:var(--navy); }
+.mono{ font-family:var(--mono); font-size:0.95em; }
+.src{ color:var(--muted); font-size:0.9em; }
+.tb{ display:inline-block; font: 700 10px var(--sans); letter-spacing:.04em; text-transform:uppercase; color:var(--amber); background:var(--amber-bg); border:1px solid #ecd49a; border-radius:3px; padding:0 4px; }
+.box{ border:1px solid #ecd49a; background:#fffbf0; border-radius:4px; padding:4px 7px; }
+.trap{ border:1px solid #efb9be; background:var(--red-bg); border-radius:4px; padding:4px 7px 2px; }
+.write{ border:1.5px solid var(--navy); background:var(--pale); border-radius:4px; padding:4px 7px 2px; }
+table.dij td, table.dij th{ text-align:center; font-family:var(--mono); padding:1px 4px; }
+table.dij th:first-child, table.dij td:first-child{ font-family:var(--sans); }
+.c{ display:inline-block; border:1.3px solid var(--text); border-radius:50%; padding:0 3px; line-height:1.2; }
+sup{ font-size:0.7em; }
+
+@media (max-width: 760px){
+  .cols{ column-count:1; }
+  .sheet{ padding:12px; margin:8px 8px 24px; }
+  .bar{ padding:10px 8px 0; }
+  table{ font-size:12px; }
+}
+
+@page{ size: A4 portrait; margin: 9mm; }
+@media print{
+  body{ background:#fff; font-size:8.4pt; line-height:1.3; }
+  .bar{ display:none; }
+  .sheet{ max-width:none; margin:0; border:0; padding:0; border-radius:0; }
+  h1{ font-size:12.5pt; }
+  header p{ font-size:7.5pt; }
+  h2{ font-size:8.4pt; padding:1px 5px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .cols{ column-count:2; column-gap:5mm; }
+  section{ margin-bottom:5px; }
+  table{ font-size:7.9pt; }
+  .tb, th, .box, .trap, .write{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  a{ color:inherit; text-decoration:none; }
+}
+</style>
+</head>
+<body>
+<div class="bar">
+  <a href="index.html#/start">← Back to the revision site</a>
+  <button type="button" onclick="window.print()">Print this sheet</button>
+  <span class="hint">Fits one A4 page. Course terms only; textbook-only facts are marked <span class="tb">Textbook</span>.</span>
+</div>
+
+<main class="sheet">
+<header>
+  <h1>CS214 Test 2 — one-page revision sheet</h1>
+  <p>From the Lec 4.1–9.2 slides and Labs 8–9 · tie rules and conventions as used across the site</p>
+</header>
+
+<div class="cols">
+
+<section>
+  <h2>Four design approaches — and how to tell them apart</h2>
+  <table>
+    <tr><th>Approach</th><th>What it does (course wording)</th><th>Clue in the question</th></tr>
+    <tr><td><b>Brute force</b></td><td>Try every candidate solution, keep the best.</td><td>"every order / route", n! candidates</td></tr>
+    <tr><td><b>Divide and conquer</b> <span class="src">Lec 4.1</span></td><td><b>Top-down</b>: divide an instance into smaller instances, conquer each by recursion, combine (if needed).</td><td>n/2, n/3 pieces that <b>don't overlap</b>: binary search, mergesort, quicksort</td></tr>
+    <tr><td><b>Dynamic programming</b> <span class="src">Lec 6.1</span></td><td><b>Bottom-up</b>: solve small instances first, <b>store</b> the results, look them up. Needs a recursive property.</td><td>n − 1, n − 2 sub-instances that <b>overlap</b>; "try every option using stored answers"; a table: binomial coefficient, Fibonacci</td></tr>
+    <tr><td><b>Greedy</b> <span class="src">Lec 8.1</span></td><td>A sequence of decisions, each the best <b>at that moment</b>, never undone. May not be optimal.</td><td>"always take the cheapest / smallest now and keep it": coins, Huffman, Prim, Kruskal, Dijkstra</td></tr>
+  </table>
+  <p><b>Justify from the formula or strategy itself</b> (e.g. "one half-size instance, no overlap"; "cheapest edge chosen and never undone"), then say why the others don't fit.</p>
+</section>
+
+<section>
+  <h2>Greedy: the three steps in every iteration (Lec 8.1)</h2>
+  <ul>
+    <li><b>Selection procedure</b> — choose the locally best next item.</li>
+    <li><b>Feasibility check</b> — can it be added without breaking the rules?</li>
+    <li><b>Solution check</b> — is the instance solved?</li>
+  </ul>
+  <p>Coins 12c, 10c, 5c, 1c for 16c: greedy 12+1+1+1+1 = <b>5 coins</b>, optimal 10+5+1 = <b>3</b>. Greedy is simpler, but only sometimes optimal; DP is optimal when the principle of optimality applies.</p>
+</section>
+
+<section>
+  <h2>The four greedy algorithms</h2>
+  <div class="alg"><b class="name">Kruskal</b> <span class="src">Lec 9.1 — MST</span><br>
+    Input: undirected, weighted, connected graph. F = ∅; one <b>disjoint subset</b> per vertex; <b>sort edges</b> in nondecreasing order.
+    Select the next edge → if its ends are in <b>different subsets</b>: merge them, add the edge to F; otherwise <b>skip</b> (it would make a cycle).
+    Solved when all subsets are merged (n − 1 edges). No start vertex.</div>
+  <div class="alg"><b class="name">Prim</b> <span class="src">Lec 9.1 — MST</span><br>
+    F = ∅, Y = {v1}. Select the vertex in V − Y <b>nearest to Y</b> (joined to Y by an edge of minimum weight — <i>one</i> edge, not a path);
+    add it to Y and that edge to F. Solved when Y == V. Any start vertex gives the same total weight.</div>
+  <div class="alg"><b class="name">Dijkstra</b> <span class="src">Lec 9.2 — single-source shortest paths</span><br>
+    Directed or undirected, weights ≥ 0. Y = {source}, F = ∅. Select the vertex in V − Y with the shortest path from the source
+    <b>using only vertices in Y as intermediates</b>; add it to Y and the edge on its shortest path to F; update the others. Solved when Y == V.
+    Similar to Prim, but compares <b>whole path lengths from the source</b>.</div>
+  <div class="alg"><b class="name">Huffman</b> <span class="src">Lec 8.2 — optimal prefix code</span><br>
+    Priority queue: lowest frequency = highest priority. Repeat n − 1 times: remove p, remove q; new node r with
+    <span class="mono">r-&gt;left = p</span>, <span class="mono">r-&gt;right = q</span>, frequency p + q; insert r.
+    Code = path from the root, <b>left 0, right 1</b>. "No feasibility check"; "no solution check — solution is obtained when i = n − 1".</div>
+</section>
+
+<section>
+  <h2>Dijkstra: the lecturer's table (Lec 9.2 example, from v1)</h2>
+  <table class="dij">
+    <tr><th>Added</th><th>v2</th><th>v3</th><th>v4</th><th>v5</th></tr>
+    <tr><td>v1</td><td>7<sup>1</sup></td><td>4<sup>1</sup></td><td>6<sup>1</sup></td><td><span class="c">1<sup>1</sup></span></td></tr>
+    <tr><td>v5</td><td>7<sup>1</sup></td><td>4<sup>1</sup></td><td><span class="c">2<sup>5</sup></span></td><td>—</td></tr>
+    <tr><td>v4</td><td>5<sup>4</sup></td><td><span class="c">4<sup>1</sup></span></td><td>—</td><td>—</td></tr>
+    <tr><td>v3</td><td><span class="c">5<sup>4</sup></span></td><td>—</td><td>—</td><td>—</td></tr>
+  </table>
+  <ul>
+    <li>Entry = <b>distance<sup>predecessor</sup></b> (7<sup>1</sup> = 7 so far, from v1); ∞ if no path yet. <b>Circle</b> the smallest: its row comes next. <b>—</b> once in Y.</li>
+    <li>New row: only edges from the vertex just added can change entries; <b>replace only if strictly shorter</b> (v3: 4 + 2 = 6 is not &lt; 5 → keep 5<sup>4</sup>).</li>
+    <li>Finish with a list: every vertex, its <b>distance and path</b> (follow the superscripts back: v2 ← v4 ← v5 ← v1).</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Huffman: rules and counting bits</h2>
+  <ul>
+    <li><b>Prefix code:</b> no codeword is the beginning of another. Characters sit only at leaves.</li>
+    <li><b>Total bits</b> = Σ (frequency × code length).</li>
+    <li><b>Fixed-length</b> = (number of characters in the file) × ⌈lg k⌉ bits, for k different characters (6 characters → 3 bits). The lab photos' "original" uses 8 bits per character.</li>
+    <li>Encoded ÷ original × 100 = the <b>compressed size</b> (%); space saved = 100 − that. The lab photos call the first one "% compression".</li>
+    <li><b>Reverse (table → tree, 2025 Q1):</b> node weight = sum of its children; every merge must take the <b>two smallest</b> nodes in the queue at that moment; the left child is the one removed first (≤ the right). Each merge gives a condition on the unknown.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Common traps</h2>
+  <div class="trap"><ul>
+    <li><b>Prim ≠ Dijkstra.</b> Prim: cheapest single edge from Y. Dijkstra: shortest total path from the source.</li>
+    <li><b>MST ≠ shortest paths.</b> A–B 2, B–C 2, A–C 3: the MST weighs 4; Dijkstra from A keeps A–C, total 5.</li>
+    <li><b>Kruskal:</b> a skipped edge doesn't end the run — carry on until n − 1 edges are in F.</li>
+    <li><b>Dijkstra:</b> directed edges go one way; never update a vertex already in Y; give the <b>path</b>, not just the distance.</li>
+    <li><b>Huffman:</b> a merged node can be smaller than an original character — put it back in the queue by weight.</li>
+    <li><b>DP vs D&amp;C:</b> "shrinks by one" is not the test; <b>overlap</b> is.</li>
+    <li>Out of scope: knapsack, TSP, Floyd.</li>
+  </ul></div>
+</section>
+
+<section>
+  <h2>Write your assumptions on the paper</h2>
+  <div class="write"><ul>
+    <li><b>Huffman:</b> "Smaller weight on the left (the node removed first), 0 = left, 1 = right. On equal weights I took …".</li>
+    <li><b>Ties</b> in Dijkstra, Prim or Kruskal — <b>the course states no tie rule</b>: "A and C tie at 3; I took A first." Any tied choice is correct; say which.</li>
+    <li><b>Dijkstra:</b> "An entry is replaced only when the new distance is strictly shorter."</li>
+    <li><b>Kruskal:</b> list your sorted edges, so the marker can see your order.</li>
+  </ul></div>
+</section>
+
+<section>
+  <h2>Time complexities <span class="tb">Textbook — not in the slides</span></h2>
+  <div class="box">
+    <p>Dijkstra <b>Θ(n²)</b> · Prim <b>Θ(n²)</b>, good for dense graphs · Kruskal <b>Θ(m lg m)</b>, good for sparse graphs · Huffman <b>Θ(n lg n)</b> with a heap. n = vertices or characters, m = edges. From the prescribed text only; the slides give none.</p>
+  </div>
+</section>
+
+</div>
+</main>
+</body>
+</html>

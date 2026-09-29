@@ -25,7 +25,7 @@
     margin:0; min-height:100vh; font-family:var(--sans); color:var(--text); background:var(--page);
     display:flex; align-items:center; justify-content:center; padding:40px 16px;
   }
-  .wrap{ max-width:640px; width:100%; }
+  .wrap{ max-width:780px; width:100%; }
   .kicker{
     font-size:12px; letter-spacing:.08em; text-transform:uppercase; font-weight:700;
     color:var(--blue-dark); text-align:center; margin:0 0 8px;
@@ -45,6 +45,7 @@
     font-weight:700; font-size:17px; color:#fff; background:var(--navy); margin-bottom:14px;
   }
   .profile.eljay .avatar{ background:#5a6f2f; }
+  .profile.cs214 .avatar{ background:var(--blue-dark); font-size:14px; }
   .profile h2{ font-size:18px; margin:0 0 5px; font-weight:700; }
   .profile p{ margin:0; font-size:13.5px; color:var(--muted); line-height:1.5; }
   .profile .tag{
@@ -58,7 +59,7 @@
 <div class="wrap">
   <p class="kicker">Revision</p>
   <h1>Who's revising?</h1>
-  <p class="sub">Each profile is a separate course with its own material and its own saved progress. Picking one doesn't touch the other.</p>
+  <p class="sub">Each profile is a separate course with its own material and its own saved progress. Picking one doesn't touch the others.</p>
   <div class="profiles">
     <a class="profile ayga" href="ayga/index.html">
       <div class="avatar">A</div>
@@ -71,6 +72,12 @@
       <h2>Eljay</h2>
       <p>PL101 — Politics of Development. Weeks 1&ndash;7: poverty &amp; inequality, colonialism, independence, modernisation, aid, and critical approaches.</p>
       <span class="tag">Theory &amp; essay practice</span>
+    </a>
+    <a class="profile cs214" href="cs214/index.html">
+      <div class="avatar">214</div>
+      <h2>Ayga &middot; CS214</h2>
+      <p>CS214 — Design &amp; Analysis of Algorithms, Test 2. Design approaches, Dijkstra, Prim, Kruskal and Huffman coding, built around the 2025 paper.</p>
+      <span class="tag">Test 2 &middot; algorithms</span>
     </a>
   </div>
   <footer>Static site, no accounts &mdash; progress is saved per profile in this browser only.</footer>
