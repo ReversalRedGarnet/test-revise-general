@@ -277,7 +277,7 @@ textarea.scratch{
 .pager a.next{ text-align:right; }
 
 .formula{
-  font-family: var(--mono); background:#f7fbfe; border:1px solid var(--code-line);
+  font-family: var(--mono); background: var(--code-bg); border:1px solid var(--code-line);
   border-left:4px solid var(--blue); padding:11px 14px; border-radius:0 var(--r) var(--r) 0;
   margin:0 0 16px; font-size:14px; overflow-x:auto; color:#20404f;
 }
@@ -540,7 +540,7 @@ table.dij input.din{
 }
 table.dij input.pin{
   width:3.8ch; font: 600 11.5px var(--mono); text-align:center; padding:1px 2px; margin-left:2px;
-  border:1px solid #b5cadb; border-radius:3px; background:#f7fbfe; color:#1d4e6f; vertical-align:super;
+  border:1px solid #b5cadb; border-radius:3px; background: var(--code-bg); color:#1d4e6f; vertical-align:super;
 }
 
 /* ---------- step-through / DIY controls ---------- */
@@ -563,7 +563,7 @@ select.sel{
 .setbox{ border:1px solid var(--line); border-radius: var(--r); padding:7px 10px; background:#fff; font-size:13.5px; font-family: var(--mono); overflow-wrap:anywhere; }
 .setbox b{ display:block; font: 700 10.5px var(--sans); letter-spacing:.06em; text-transform:uppercase; color: var(--muted); margin-bottom:3px; }
 .pq{ display:flex; flex-wrap:wrap; gap:5px; }
-.pq span{ font-size:12.5px; border:1px solid var(--line); border-radius:3px; padding:1px 6px; background:#f7fbfe; }
+.pq span{ font-size:12.5px; border:1px solid var(--line); border-radius:3px; padding:1px 6px; background: var(--code-bg); }
 .pq span.min{ border-color: var(--navy); background:#dcecf8; font-weight:700; }
 .pickrow{ display:flex; flex-wrap:wrap; gap:6px; margin: 4px 0 10px; }
 .pickbtn{
@@ -649,7 +649,7 @@ label.setting input{ margin-top:5px; }
 /* ============================================================
    Stage 3: written answers, MST tables, coin table, mock test
    ============================================================ */
-.formula-inline{ font-family: var(--mono); background:#f7fbfe; border:1px solid var(--code-line); border-radius:3px; padding:1px 6px; white-space:nowrap; }
+.formula-inline{ font-family: var(--mono); background: var(--code-bg); border:1px solid var(--code-line); border-radius:3px; padding:1px 6px; white-space:nowrap; }
 .pickbtn.sel{ border-color: var(--navy); background:#dcecf8; }
 .witem textarea.scratch{ margin-top:4px; }
 .model{ background:#f7fbfd; border:1px solid var(--line); border-left:4px solid var(--green); border-radius:0 var(--r) var(--r) 0; padding:10px 13px; margin:6px 0 10px; }
@@ -672,7 +672,6 @@ table.coins td.hit{ background:#dcecf8; font-weight:700; }
 .clock{ font: 700 18px var(--mono); color: var(--navy); }
 .clock.low{ color: var(--red); }
 .mocktabs{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
-.mockq .part:first-of-type{ border-top:0; }
 input.wideline{ max-width:420px; }
 h3.mockhead{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; border-top:1px solid var(--line); padding-top:14px; }
 table.mst td:nth-child(2){ white-space:nowrap; }
